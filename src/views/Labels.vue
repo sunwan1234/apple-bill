@@ -1,8 +1,7 @@
 <template>
-	<div>
-		labels
-		<Nav></Nav>
-	</div>
+		<Layout>
+			<p>labels 你好</p>
+		</Layout>
 </template>
 
 <script lang="ts">

@@ -1,13 +1,16 @@
 <template>
-	<Layout>
-		<p>Money</p>
-	</Layout>
+	<div class="nav-wrapper">
+		<div class="content">
+			<slot></slot>
+		</div>
 
+		<Nav></Nav>
+	</div>
 </template>
 
 <script lang="ts">
   export default {
-    name: 'Money'
+    name: 'Layout'
   };
 </script>
 
