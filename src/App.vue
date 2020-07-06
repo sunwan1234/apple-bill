@@ -2,7 +2,6 @@
 	<div>
 		<!--    展示不同的router-->
 		<router-view></router-view>
-		<hr>
 
 	</div>
 </template>
