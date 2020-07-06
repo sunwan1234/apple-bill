@@ -12,8 +12,15 @@
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
-	}
 
+	}
+body {
+	line-height: 1.5;
+}
+a {
+	color:inherit;
+	text-decoration: none; // 去掉a标签下划线
+}
 	#app {
 		font-family: Avenir, Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
