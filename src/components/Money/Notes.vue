@@ -3,14 +3,15 @@
 		<label class="notes">
 			<span class="name">备注</span>
 			<input type="text"  placeholder="在这里输入备注" >
-			<span class="output">100</span>
+			<span class="output">{{output}}</span>
 		</label>
 	</div>
 </template>
 
 <script lang="ts">
   export default {
-    name: 'Notes'
+    name: 'Notes',
+		props:['output']
   };
 </script>
 
@@ -35,6 +36,7 @@
 			background: transparent;
 			border: none;
 			padding-right: 12px;
+			width: 100px;
 		}
 
 		.output {
