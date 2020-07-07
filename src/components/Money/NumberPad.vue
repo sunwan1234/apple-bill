@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-  import Notes from '@/components/Notes.vue';
+  import Notes from '@/components/Money/Notes.vue';
   export default {
     name: 'NumberPad',
     components: {Notes}
