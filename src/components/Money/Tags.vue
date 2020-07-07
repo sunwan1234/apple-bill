@@ -1,38 +1,13 @@
 <template>
 	<div class="tags">
 		<ul class="current out" v-if="isShow === '-'">
-			<li class="selected">
-				<Icon name="meal"></Icon>
-				餐饮
+			<li v-for="(value, name) in this.outDataSource"
+					:class="{selected: selectedTags.indexOf(value) >= 0}"
+					:key="name" @click="toggle(value)">
+				<Icon :name="name"></Icon>
+				{{ value }}
 			</li>
-			<li>
-				<Icon name="shop"></Icon>
-				购物
-			</li>
-			<li>
-				<Icon name="everyday"></Icon>
-				日用
-			</li>
-			<li>
-				<Icon name="transport"></Icon>
-				交通
-			</li>
-			<li>
-				<Icon name="sport2"></Icon>
-				运动
-			</li>
-			<li>
-				<Icon name="fun"></Icon>
-				娱乐
-			</li>
-			<li>
-				<Icon name="cloth"></Icon>
-				服饰
-			</li>
-			<li>
-				<Icon name="pet"></Icon>
-				宠物
-			</li>
+
 			<li class="new">
 				<button>
 					<Icon name="plus"></Icon>
@@ -41,39 +16,12 @@
 			</li>
 		</ul>
 		<ul class="current in" v-if="isShow === '+'">
-			<li class="selected">
-				<Icon name="in-salary"></Icon>
-				工资
+			<li v-for="(value, name) in this.inDataSource"
+					:class="{selected: selectedTags.indexOf(value) >= 0}"
+					:key="name">
+				<Icon :name="name"></Icon>
+				{{ value }}
 			</li>
-			<li>
-				<Icon name="in-redpocket"></Icon>
-				红包
-			</li>
-			<li>
-				<Icon name="in-rent"></Icon>
-				租金
-			</li>
-			<li>
-				<Icon name="in-gift"></Icon>
-				礼金
-			</li>
-			<li>
-				<Icon name="in-get"></Icon>
-				收款
-			</li>
-			<li>
-				<Icon name="in-manage"></Icon>
-				理财
-			</li>
-			<li>
-				<Icon name="in-annual"></Icon>
-				年终奖
-			</li>
-			<li>
-				<Icon name="in-other"></Icon>
-				其他
-			</li>
-
 			<li class="new">
 				<button>
 					<Icon name="plus"></Icon>
@@ -85,10 +33,31 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Tags',
-    props: ['isShow']
-  };
+  import Vue from 'vue';
+  import {Component, Prop} from 'vue-property-decorator';
+
+  @Component
+  export default class Tags extends Vue {
+    @Prop(String) isShow: string | undefined;
+    @Prop(Object) outDataSource: Record<string, string> | undefined;
+    @Prop(Object) inDataSource: Record<string, string> | undefined;
+
+
+    selectedTags: string[] = [];
+
+    toggle(tag: string) {
+      const index = this.selectedTags.indexOf(tag)
+     if (index >= 0) {
+       // 如果当前点击的tag已经在数组中，即已经被点击过
+			 // 就删除这个元素，我们的目标是双击取消选中
+			 this.selectedTags.splice(index, 1);
+
+		 } else {
+       this.selectedTags.push(tag);
+		 }
+    }
+
+  }
 </script>
 
 <style scoped lang="scss">

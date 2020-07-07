@@ -9,20 +9,22 @@
 			</li>
 		</ol>
 
-		<Tags :is-show="type"></Tags>
+		<Tags :is-show="type" :out-data-source="outputDataSource" :in-data-source="inputDataSource"></Tags>
 	</div>
 
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
   import Tags from '@/components/Money/Tags.vue';
 
   @Component({
     components: {Tags}
   })
   export default class Types extends Vue {
+    @Prop(Object) outputDataSource: Record<string, string> | undefined;
+    @Prop(Object) inputDataSource: Record<string, string> | undefined;
     type = '-';//'-' 表示支出， ‘+’表示收入
 
     selectType(type: string) { // type只能是'-' 或者 '+'
@@ -55,8 +57,6 @@
 	}
 
 	.types > li.selected {
-		/*background: url("~@/assets/1.png") center center no-repeat;*/
-		/*background-size: 50% 100%;*/
 		border-bottom: 1px solid #333333;
 	}
 
