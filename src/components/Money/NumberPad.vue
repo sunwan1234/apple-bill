@@ -56,12 +56,11 @@
     }
 
     remove() {
-      const currentVal = this.output.slice(0, -1);
-      if (currentVal.length === 1) {
+      if (this.output.length === 1) {
         this.output = '0';
-			} else {
-        this.output = currentVal
-			}
+      } else {
+        this.output = this.output.slice(0, -1);
+      }
     }
 
     clear() {
