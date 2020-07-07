@@ -24,5 +24,7 @@
 	.content {
 		flex-grow: 1; // 让内容尽量占满
 		overflow: auto;
+		display: flex;
+		flex-direction: column;
 	}
 </style>

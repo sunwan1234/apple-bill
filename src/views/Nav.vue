@@ -37,6 +37,7 @@
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
+			filter: grayscale(100%);
 		}
 
 		.icon {
@@ -45,7 +46,7 @@
 		}
 
 		.item.selected {
-			color: red;
+			filter: grayscale(0);
 		}
 	}
 
