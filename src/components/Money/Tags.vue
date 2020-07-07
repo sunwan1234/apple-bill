@@ -1,6 +1,6 @@
 <template>
 	<div class="tags">
-		<ul class="current">
+		<ul class="current out" v-if="isShow === '-'">
 			<li class="selected">
 				<Icon name="meal"></Icon>
 				餐饮
@@ -40,12 +40,46 @@
 				</button>
 			</li>
 		</ul>
+		<ul class="current in" v-if="isShow === '+'">
+			<li class="selected">
+				<Icon name="meal"></Icon>
+				餐饮
+			</li>
+			<li>
+				<Icon name="shop"></Icon>
+				购物
+			</li>
+			<li>
+				<Icon name="everyday"></Icon>
+				日用
+			</li>
+			<li>
+				<Icon name="transport"></Icon>
+				交通
+			</li>
+			<li>
+				<Icon name="sport2"></Icon>
+				运动
+			</li>
+			<li>
+				<Icon name="fun"></Icon>
+				娱乐
+			</li>
+
+			<li class="new">
+				<button>
+					<Icon name="plus"></Icon>
+					新增
+				</button>
+			</li>
+		</ul >
 	</div>
 </template>
 
 <script lang="ts">
   export default {
-    name: 'Tags'
+    name: 'Tags',
+		props: ['isShow']
   };
 </script>
 
@@ -59,7 +93,8 @@
 
 	.tags {
 		flex-shrink: 1;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	.tags .current {

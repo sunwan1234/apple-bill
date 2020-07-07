@@ -1,6 +1,6 @@
 <template>
 	<Layout>
-		<Types xxx="hi"></Types>
+		<Types :xxx="1"></Types>
 
 		<Tags></Tags>
 
