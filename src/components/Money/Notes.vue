@@ -36,6 +36,10 @@
 			border: none;
 			padding-right: 12px;
 		}
+
+		.output {
+			font-size: 30px;
+		}
 	}
 
 	.notes-wrapper {

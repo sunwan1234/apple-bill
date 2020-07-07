@@ -42,28 +42,36 @@
 		</ul>
 		<ul class="current in" v-if="isShow === '+'">
 			<li class="selected">
-				<Icon name="meal"></Icon>
-				餐饮
+				<Icon name="in-salary"></Icon>
+				工资
 			</li>
 			<li>
-				<Icon name="shop"></Icon>
-				购物
+				<Icon name="in-redpocket"></Icon>
+				红包
 			</li>
 			<li>
-				<Icon name="everyday"></Icon>
-				日用
+				<Icon name="in-rent"></Icon>
+				租金
 			</li>
 			<li>
-				<Icon name="transport"></Icon>
-				交通
+				<Icon name="in-gift"></Icon>
+				礼金
 			</li>
 			<li>
-				<Icon name="sport2"></Icon>
-				运动
+				<Icon name="in-get"></Icon>
+				收款
 			</li>
 			<li>
-				<Icon name="fun"></Icon>
-				娱乐
+				<Icon name="in-manage"></Icon>
+				理财
+			</li>
+			<li>
+				<Icon name="in-annual"></Icon>
+				年终奖
+			</li>
+			<li>
+				<Icon name="in-other"></Icon>
+				其他
 			</li>
 
 			<li class="new">
@@ -72,19 +80,19 @@
 					新增
 				</button>
 			</li>
-		</ul >
+		</ul>
 	</div>
 </template>
 
 <script lang="ts">
   export default {
     name: 'Tags',
-		props: ['isShow']
+    props: ['isShow']
   };
 </script>
 
 <style scoped lang="scss">
-	@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+	@media (device-height: 568px) and (-webkit-min-device-pixel-ratio: 2) {
 		.tags {
 			max-height: 29vh;
 		}
