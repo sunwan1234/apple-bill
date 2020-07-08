@@ -64,7 +64,6 @@
 
 
     onUpdateTag(value: string) {
-      console.log(value);
       this.account.tag = value;
     }
 
@@ -76,18 +75,14 @@
       this.account.note = value;
     }
 
-    saveAccount() {
-      const newAccount: AccountItem = accountListModel.clone(this.account);
-      newAccount.createdAt = new Date();
-      this.accountList.push(newAccount);
-      console.log(this.accountList);
-
+    saveAccount(account: AccountItem) {
+      accountListModel.create(account)
     }
 
 
     @Watch('accountList')
     onAccountListChange() {
-      accountListModel.save(this.accountList)
+      accountListModel.save()
     }
 
     created() {
