@@ -1,6 +1,5 @@
 <template>
 	<Layout>
-    {{account}}
 		<Types :value.sync="account.type" @update:selectedTag="onUpdateTag">
 		</Types>
 		<Tags :is-show="account.type" @update:tag="onUpdateTag"
@@ -26,6 +25,7 @@
     tag: string;
     amount: number;
     note: string;
+    createdAt?: Date;
   }
 
   @Component({
@@ -64,7 +64,7 @@
 
     accountList: Account[] = JSON.parse(window.localStorage.getItem('accountList') || '[]');
     account: Account = {
-      type: '-', tag: '', amount: 0, note: ''
+      type: '-', tag: '', amount: 0, note: '',
     };
 
 
@@ -78,15 +78,14 @@
     }
 
     onUpdateNote(value: string) {
-      console.log('---note')
-			console.log(value)
       this.account.note = value;
     }
 
     saveAccount() {
-      const newAccount = JSON.parse(JSON.stringify(this.account))
+      const newAccount: Account = JSON.parse(JSON.stringify(this.account));
+      newAccount.createdAt = new Date();
       this.accountList.push(newAccount);
-      console.log(this.accountList)
+      console.log(this.accountList);
 
     }
 
@@ -100,9 +99,9 @@
     }
 
     @Watch('accountList')
-      onAccountListChange() {
-        window.localStorage.setItem('accountList', JSON.stringify(this.accountList));
-      }
+    onAccountListChange() {
+      window.localStorage.setItem('accountList', JSON.stringify(this.accountList));
+    }
 
 
     created() {
