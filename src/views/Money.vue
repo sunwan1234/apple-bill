@@ -19,14 +19,9 @@
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
   import eventBus from '@/bus.ts';
+  import model from '@/model.ts';
 
-  type Account = {
-    type: string;
-    tag: string;
-    amount: number;
-    note: string;
-    createdAt?: Date;
-  }
+  const accountList = model.fetch();
 
   @Component({
     components: {Types, Tags, NumberPad}
@@ -62,8 +57,8 @@
     ];
 
 
-    accountList: Account[] = JSON.parse(window.localStorage.getItem('accountList') || '[]');
-    account: Account = {
+    accountList: AccountItem[] = accountList;
+    account: AccountItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
 
@@ -82,27 +77,18 @@
     }
 
     saveAccount() {
-      const newAccount: Account = JSON.parse(JSON.stringify(this.account));
+      const newAccount: AccountItem = model.clone(this.account);
       newAccount.createdAt = new Date();
       this.accountList.push(newAccount);
       console.log(this.accountList);
 
     }
 
-    onUpdateOutTags(outTags: Array<Record<string, string>>) {
-      console.log(outTags);
-      this.outputTags = outTags;
-    }
-
-    onUpdateInTags(inTags: Array<Record<string, string>>) {
-      this.inputTags = inTags;
-    }
 
     @Watch('accountList')
     onAccountListChange() {
-      window.localStorage.setItem('accountList', JSON.stringify(this.accountList));
+      model.save(this.accountList)
     }
-
 
     created() {
       eventBus.$on('update:note', (note: string) => {
