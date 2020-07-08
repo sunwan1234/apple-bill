@@ -62,7 +62,7 @@
     ];
 
 
-    accountList: Account[] = [];
+    accountList: Account[] = JSON.parse(window.localStorage.getItem('accountList') || '[]');
     account: Account = {
       type: '-', tag: '', amount: 0, note: ''
     };
