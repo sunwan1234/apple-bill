@@ -19,9 +19,9 @@
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
   import eventBus from '@/bus.ts';
-  import model from '@/model.ts';
+  import accountListModel from '@/models/accountListModel';
 
-  const accountList = model.fetch();
+  const accountList = accountListModel.fetch();
 
   @Component({
     components: {Types, Tags, NumberPad}
@@ -77,7 +77,7 @@
     }
 
     saveAccount() {
-      const newAccount: AccountItem = model.clone(this.account);
+      const newAccount: AccountItem = accountListModel.clone(this.account);
       newAccount.createdAt = new Date();
       this.accountList.push(newAccount);
       console.log(this.accountList);
@@ -87,7 +87,7 @@
 
     @Watch('accountList')
     onAccountListChange() {
-      model.save(this.accountList)
+      accountListModel.save(this.accountList)
     }
 
     created() {
