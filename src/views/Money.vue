@@ -7,7 +7,7 @@
 					:out-data-source.sync="outputTags"
 					:in-data-source.sync="inputTags"
 		></Tags>
-		<NumberPad @update:value="onUpdateAmount"></NumberPad>
+		<NumberPad @update:value="onUpdateAmount" @submit="saveAccount"></NumberPad>
 
 	</Layout>
 
@@ -61,7 +61,8 @@
       {svg: 'in-other', name: '其他'}
     ];
 
-    accountList: Account[] | undefined;
+
+    accountList: Account[] = [];
     account: Account = {
       type: '-', tag: '', amount: 0, note: ''
     };
@@ -83,8 +84,10 @@
     }
 
     saveAccount() {
-      const newAccount: Account = JSON.parse(JSON.stringify(this.account));
-      this.accountList?.push(newAccount);
+      const newAccount = JSON.parse(JSON.stringify(this.account))
+      this.accountList.push(newAccount);
+      console.log(this.accountList)
+
     }
 
     onUpdateOutTags(outTags: Array<Record<string, string>>) {
@@ -96,11 +99,11 @@
       this.inputTags = inTags;
     }
 
-    // @Watch('accountList') {
-    //   onAccountListChange() {
-    //     window.localStorage.setItem('accountList', JSON.stringify(this.account));
-    //   }
-    // }
+    @Watch('accountList')
+      onAccountListChange() {
+        window.localStorage.setItem('accountList', JSON.stringify(this.accountList));
+      }
+
 
     created() {
       eventBus.$on('update:note', (note: string) => {
