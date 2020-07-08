@@ -1,29 +1,29 @@
 <template>
 	<div class="tags">
 		<ul class="current out" v-if="isShow === '-'">
-			<li v-for="(value, name) in this.outDataSource"
-					:class="{selected: selectedTags.indexOf(value) >= 0}"
-					:key="name" @click="toggle(value)">
-				<Icon :name="name"></Icon>
-				{{ value }}
+			<li v-for="(item, index) in this.outDataSource"
+					:class="{selected: selectedTags.indexOf(item.name) >= 0}"
+					:key="index" @click="toggle(item.name)">
+				<Icon :name="item.svg"></Icon>
+				{{ item.name }}
 			</li>
 
 			<li class="new">
-				<button>
+				<button @click="create('out')">
 					<Icon name="plus"></Icon>
 					新增
 				</button>
 			</li>
 		</ul>
 		<ul class="current in" v-if="isShow === '+'">
-			<li v-for="(value, name) in this.inDataSource"
-					:class="{selected: selectedTags.indexOf(value) >= 0}"
-					:key="name">
-				<Icon :name="name"></Icon>
-				{{ value }}
+			<li v-for="(item, index) in this.inDataSource"
+					:class="{selected: selectedTags.indexOf(item.name) >= 0}"
+					:key="index" @click="toggle(item.name)">
+				<Icon :name="item.svg"></Icon>
+				{{ item.name }}
 			</li>
 			<li class="new">
-				<button>
+				<button @click="create('in')">
 					<Icon name="plus"></Icon>
 					新增
 				</button>
@@ -36,37 +36,85 @@
   import Vue from 'vue';
   import {Component, Prop} from 'vue-property-decorator';
 
+
   @Component
   export default class Tags extends Vue {
     @Prop(String) isShow: string | undefined;
-    @Prop(Object) outDataSource: Record<string, string> | undefined;
-    @Prop(Object) inDataSource: Record<string, string> | undefined;
+    @Prop(Array) outDataSource: Array<Record<string, string>> | undefined;
+    @Prop(Array) inDataSource: Array<Record<string, string>> | undefined;
 
+    mounted(){
+      console.log(this.outDataSource)
+		}
 
     selectedTags: string[] = [];
 
     toggle(tag: string) {
-      const index = this.selectedTags.indexOf(tag)
-     if (index >= 0) {
-       // 如果当前点击的tag已经在数组中，即已经被点击过
-			 // 就删除这个元素，我们的目标是双击取消选中
-			 this.selectedTags.splice(index, 1);
+      // 每次只能选中一个
+			if(this.selectedTags.length === 0) {
+        this.selectedTags.push(tag);
+			} else {
+			  this.selectedTags.pop();
+			  this.selectedTags.push(tag)
+			}
+			this.$emit('update:tag', this.selectedTags[0])
+    }
 
-		 } else {
-       this.selectedTags.push(tag);
-		 }
+    create(tagType: string) {
+      const name = window.prompt('请输入标签名');
+      if (name === '') {
+        window.alert('标签名不能为空');
+      } else {
+        if (tagType === 'out') {
+          if (this.outDataSource) {
+            this.$emit('update:outDataSource', [...this.outDataSource, {svg:'newsvg', 'name': name}])
+          }
+        }
+        if (tagType === 'in') {
+          if (this.inDataSource) {
+            this.$emit('update:inDataSource', [...this.inDataSource, {svg: 'newsvg', 'name': name}]);
+          }
+        }
+
+      }
+
     }
 
   }
 </script>
 
 <style scoped lang="scss">
-	@media (device-height: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+	@media (max-device-height: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+		// iphone se
 		.tags {
 			max-height: 29vh;
 		}
 
 	}
+	@media only screen and (min-device-width: 375px) and (max-device-height: 667px) {
+		//iphone 678
+		.tags {
+			max-height: 37vh;
+		}
+	}
+
+	@media only screen and (min-device-width: 400px) and (max-device-height: 850px)  {
+		//iphone 678 plus
+		.tags {
+			min-height: 34vh;
+			max-height: 49vh;
+		}
+	}
+
+	@media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+		//iphone X
+		.tags {
+			min-height: 38vh;
+			max-height: 49vh;
+		}
+	}
+
+
 
 	.tags {
 		flex-shrink: 1;

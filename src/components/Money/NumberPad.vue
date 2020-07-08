@@ -1,6 +1,6 @@
 <template>
 	<div class="numberPad">
-		<Notes :output="  output  "></Notes>
+		<Notes :output="  output  " ></Notes>
 		<div class="buttons">
 			<button @click="inputContent">1</button>
 			<button @click="inputContent">2</button>
@@ -68,7 +68,7 @@
     }
 
     ok() {
-      console.log('ok');
+      this.$emit('update:value', this.output)
     }
 
   }
