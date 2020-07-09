@@ -15,6 +15,8 @@ type TagListModel = {
   save: () => void;
   saveDefault: () => void;
   newDataId: number;
+  newTagList: string[];
+  getNewTagList: () => string[];
 }
 const tagListModel: TagListModel = {
   defaultData: [
@@ -38,6 +40,10 @@ const tagListModel: TagListModel = {
   data: [],
   n: 0,
   newTag: 1,
+  newTagList:[
+    'new-1', 'new-2', 'new-3', 'new-4', 'new-5', 'new-6', 'new-7', 'new-8','new-9',
+    'new-10', 'new-11', 'new-12', 'new-13', 'new-14', 'new-15'
+  ],
   newDataId: 17,
 
   fetch() {
@@ -64,6 +70,9 @@ const tagListModel: TagListModel = {
     this.save();
     return 'success';
   },
+  getNewTagList(){
+    return this.newTagList
+  }
   // remove(id: string) {
   //
   // }

@@ -4,8 +4,9 @@
 			<span class="name">备注</span>
 			<input v-model="value"
 						 type="text"
-						 placeholder="在这里输入备注">
-			<span class="output">{{output}}</span>
+						 :placeholder="placeholder">
+			<span class="output" v-if="isNewTag === '+'">{{output}}</span>
+			<Icon name="pencil"  v-if="isNewTag === '+'"></Icon>
 		</label>
 	</div>
 </template>
@@ -20,11 +21,13 @@
     value = '';
 
     @Prop(String) output: string | undefined;
+    @Prop(String) placeholder?: string;
+    @Prop(String) isNewTag: string | undefined;
 
     @Watch('value')
-		onValueChange(value: string) {
-      eventBus.$emit('update:note', value)
-		}
+    onValueChange(value: string) {
+      eventBus.$emit('update:note', value);
+    }
 
   }
 </script>
@@ -55,6 +58,11 @@
 
 		.output {
 			font-size: 30px;
+		}
+
+		svg {
+			width: 26px;
+			height: 26px;
 		}
 	}
 

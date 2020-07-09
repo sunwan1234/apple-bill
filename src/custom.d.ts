@@ -5,3 +5,10 @@ type RecordItem = {
   note: string;
   createdAt?: Date;
 }
+
+type Tag = {
+  id: string;
+  svg: string;
+  name: string;
+  type: string;
+}

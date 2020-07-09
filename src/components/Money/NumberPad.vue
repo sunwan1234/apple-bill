@@ -1,6 +1,6 @@
 <template>
 	<div class="numberPad">
-		<Notes :output="  output  " ></Notes>
+		<Notes :output="  output" placeholder="写点备注吧..." ></Notes>
 		<div class="buttons">
 			<button @click="inputContent">1</button>
 			<button @click="inputContent">2</button>

@@ -1,0 +1,189 @@
+<template>
+	<layout>
+		<div class="edit-label-wrapper">
+			<header>
+				<span>设定自定义标签</span>
+				<Types :value.sync="record.type" :is-new-tag="'1'"></Types>
+			</header>
+			<div class="input-new-label">
+				<div class="title">新建标签名称</div>
+				<Notes isNewTag="+" placeholder="限3个汉字或5个英文字母..."></Notes>
+			</div>
+			<div class="svgs">
+				<div class="svg-title">选择图标</div>
+				<div class="tag-list">
+					<div class="tag-wrapper">
+						<div v-for="(item, index) in newTagList" :key="index"
+								 :class="{selected: selectedTags.indexOf(item) >= 0}"
+								 @click="toggle(item)">
+							<Icon :name="item"></Icon>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="createTag-wrapper">
+				<button class="createTag">保存新标签</button>
+			</div>
+
+		</div>
+	</layout>
+
+</template>
+
+<script lang="ts">
+  import Vue from 'vue';
+  import {Component, Watch} from 'vue-property-decorator';
+  import Types from '@/components/Money/Types.vue';
+  import tagListModel from '@/models/tagListModel';
+  import Notes from '@/components/Money/Notes.vue';
+
+  @Component({
+    components: {Notes, Types}
+  })
+  export default class EditLabel extends Vue {
+    record: RecordItem = {
+      type: '-', tag: '', amount: 0, note: '',
+    };
+    newTagList = tagListModel.getNewTagList();
+    selectedTags: string[] = [];
+    tag: Tag = {
+      type: '-', name: '', svg: '', id: '',
+    };
+
+    toggle(tag: string) {
+      // 每次只能选中一个
+      if (this.selectedTags.length === 0) {
+        this.selectedTags.push(tag);
+      } else {
+        this.selectedTags.pop();
+        this.selectedTags.push(tag);
+      }
+      this.tag.svg = this.selectedTags[0];
+    }
+
+    @Watch('record.type', {immediate: true})
+    onRecordTypeChange(value) {
+      this.tag.type = value;
+    }
+
+
+
+
+
+  }
+</script>
+
+<style scoped lang="scss">
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-left: 10px;
+
+		> span {
+			font-size: 21px;
+			font-weight: 700;
+		}
+
+
+	}
+
+	.types {
+		background: white;
+		font-size: 16px;
+		align-items: center;
+	}
+
+	.types > li {
+		font-size: 14px;
+	}
+
+	.input-new-label {
+		border: 1px solid #333;
+		margin: 20px;
+		padding: 8px 10px;
+		border-radius: 10px;
+
+		> .title {
+			font-weight: bold;
+		}
+
+		label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			> input {
+				height: 56px;
+				flex-grow: 1;
+				background: transparent;
+				border: none;
+				padding-right: 12px;
+			}
+
+			> svg {
+				width: 30px;
+				height: 30px;
+			}
+		}
+
+	}
+
+	.svgs {
+		padding: 10px;
+
+		.svg-title {
+			font-weight: bold;
+		}
+
+		.tag-list {
+			overflow: hidden;
+			width: 345px;
+
+			margin: auto;
+			padding-top: 3px;
+
+			> .tag-wrapper {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: flex-start;
+				margin-right: -20px;
+
+				> div.selected {
+					border: 1px solid rgb(248, 124, 148);
+				}
+
+				> div {
+					padding: 10px;
+					border: 1px solid #333;
+					border-radius: 50%;
+					line-height: 1;
+					margin-right: 20px;
+					margin-bottom: 20px;
+
+					> svg {
+						width: 30px;
+						height: 30px;
+					}
+				}
+
+			}
+		}
+
+
+	}
+
+	.createTag {
+		background: #fed058;
+		color: #333;
+		border-radius: 4px;
+		border: none;
+		height: 40px;
+		padding: 0 16px;
+
+		&-wrapper {
+			text-align: center;
+		}
+	}
+</style>

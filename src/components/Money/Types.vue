@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<ol class="types">
-			<li :class=" value === '-' && 'selected' " @click="selectType('-')">
+		<ol :class=" IsNewTag === '1' ? 'types new-tag' : 'types' ">
+			<li :class=" value === '-' && 'selected'  "  @click="selectType('-')">
 				<span>支出</span>
 			</li>
 			<li :class=" value === '+' && 'selected' " @click="selectType('+')">
@@ -23,6 +23,7 @@
   })
   export default class Types extends Vue {
     @Prop(String) readonly value!: string
+		@Prop(String) readonly 'IsNewTag'
 
     selectType(type: string) { // type只能是'-' 或者 '+'
       if (type !== '-' && type !== '+') {
@@ -56,6 +57,20 @@
 
 	.types > li.selected {
 		border-bottom: 1px solid #333333;
+	}
+	
+	.new-tag {
+		background-color: #fff;
+	}
+
+	.new-tag > li {
+		font-size: 16px;
+		margin-right: 10px;
+	}
+
+	.new-tag > li.selected {
+		border: none;
+		color: #fd9b09;
 	}
 
 </style>

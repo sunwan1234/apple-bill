@@ -26,7 +26,11 @@
 				</li>
 			</ol>
 			<div class="createTag-wrapper" v-if=" isShow === '-'">
-				<button class="createTag" @click="createTag('-')">新建支出标签</button>
+				<router-link to="/labels/edit">
+					<!--					<button class="createTag" @click="createTag('-')">新建支出标签</button>-->
+					<button class="createTag">新建支出标签</button>
+				</router-link>
+
 			</div>
 			<div class="createTag-wrapper" v-if=" isShow === '+'">
 				<button class="createTag" @click="createTag('+')">新建收入标签</button>
@@ -40,7 +44,6 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component, Watch} from 'vue-property-decorator';
-  import recordListModel from '@/models/recordListModel';
   import Types from '@/components/Money/Types.vue';
   import tagListModel from '@/models/tagListModel';
 
@@ -75,18 +78,14 @@
       const name = window.prompt('请输入标签名');
       if (name) {
         const message = tagListModel.create(name, type);
-        if(message === 'duplicated') {
-          window.alert('标签名重复')
-				} else if(message === 'success'){
-          window.alert('添加成功')
-				}
+        if (message === 'duplicated') {
+          window.alert('标签名重复');
+        } else if (message === 'success') {
+          window.alert('添加成功');
+        }
       }
     }
 
-    deleteTag(id: string) {
-      tagListModel.remove(id)
-
-		}
 
   }
 </script>
