@@ -11,15 +11,8 @@
 			</div>
 			<div class="svgs">
 				<div class="svg-title">选择图标</div>
-				<div class="tag-list">
-					<div class="tag-wrapper">
-						<div v-for="(item, index) in newTagList" :key="index"
-								 :class="{selected: selectedTags.indexOf(item) >= 0}"
-								 @click="toggle(item)">
-							<Icon :name="item"></Icon>
-						</div>
-					</div>
-				</div>
+				<Tags is-new-tag="+" :new-data-source="this.newTagList"></Tags>
+
 
 			</div>
 			<div class="createTag-wrapper">
@@ -37,9 +30,10 @@
   import Types from '@/components/Money/Types.vue';
   import tagListModel from '@/models/tagListModel';
   import Notes from '@/components/Money/Notes.vue';
+  import Tags from '@/components/Money/Tags.vue';
 
   @Component({
-    components: {Notes, Types}
+    components: {Tags, Notes, Types}
   })
   export default class EditLabel extends Vue {
     record: RecordItem = {
@@ -51,16 +45,7 @@
       type: '-', name: '', svg: '', id: '',
     };
 
-    toggle(tag: string) {
-      // 每次只能选中一个
-      if (this.selectedTags.length === 0) {
-        this.selectedTags.push(tag);
-      } else {
-        this.selectedTags.pop();
-        this.selectedTags.push(tag);
-      }
-      this.tag.svg = this.selectedTags[0];
-    }
+
 
     @Watch('record.type', {immediate: true})
     onRecordTypeChange(value) {
@@ -136,41 +121,6 @@
 		.svg-title {
 			font-weight: bold;
 		}
-
-		.tag-list {
-			overflow: hidden;
-			width: 345px;
-
-			margin: auto;
-			padding-top: 3px;
-
-			> .tag-wrapper {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: flex-start;
-				margin-right: -20px;
-
-				> div.selected {
-					border: 1px solid rgb(248, 124, 148);
-				}
-
-				> div {
-					padding: 10px;
-					border: 1px solid #333;
-					border-radius: 50%;
-					line-height: 1;
-					margin-right: 20px;
-					margin-bottom: 20px;
-
-					> svg {
-						width: 30px;
-						height: 30px;
-					}
-				}
-
-			}
-		}
-
 
 	}
 

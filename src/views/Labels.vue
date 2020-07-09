@@ -1,6 +1,5 @@
 <template>
 	<Layout>
-		{{tags}}
 		<Types :value.sync="record.type">
 		</Types>
 		<div class="labels-wrapper">
