@@ -1,5 +1,7 @@
 <template>
-	<button class="createTag">新建收入标签</button>
+	<button class="button" @click="$emit('click', $event)">
+		<slot></slot>
+	</button>
 </template>
 
 <script lang="ts">
@@ -8,10 +10,17 @@
 
   @Component
   export default class Button extends Vue {
-    name: 'Button';
+
   }
 </script>
 
 <style scoped lang="scss">
-
+	.button {
+		background: #fed058;
+		color: #333;
+		border-radius: 4px;
+		border: none;
+		height: 40px;
+		padding: 0 16px;
+	}
 </style>

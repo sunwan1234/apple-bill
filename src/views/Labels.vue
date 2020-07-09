@@ -24,15 +24,15 @@
 					<Icon :name="'delete2'"></Icon>
 				</li>
 			</ol>
-			<div class="createTag-wrapper" v-if=" isShow === '-'">
+			<div class="button-wrapper" v-if=" isShow === '-'">
 				<router-link to="/labels/edit">
-					<!--					<button class="createTag" @click="createTag('-')">新建支出标签</button>-->
-					<button class="createTag">新建支出标签</button>
+					<Button>新建标签</Button>
 				</router-link>
-
 			</div>
-			<div class="createTag-wrapper" v-if=" isShow === '+'">
-				<button class="createTag" @click="createTag('+')">新建收入标签</button>
+			<div class="button-wrapper" v-if=" isShow === '+'">
+				<router-link to="/labels/edit">
+					<Button>新建标签</Button>
+				</router-link>
 			</div>
 
 		</div>
@@ -45,11 +45,12 @@
   import {Component, Watch} from 'vue-property-decorator';
   import Types from '@/components/Money/Types.vue';
   import tagListModel from '@/models/tagListModel';
+  import Button from '@/components/Button.vue';
 
 
   tagListModel.fetch();
   @Component({
-    components: {Types}
+    components: {Button, Types}
   })
   export default class Labels extends Vue {
     tags = tagListModel.data;
@@ -128,17 +129,9 @@
 		}
 	}
 
-	.createTag {
-		background: #fed058;
-		color: #333;
-		border-radius: 4px;
-		border: none;
-		height: 40px;
-		padding: 0 16px;
-
-		&-wrapper {
-			text-align: center;
-			padding: 16px;
-		}
+	.button-wrapper {
+		text-align: center;
+		margin-top:10px;
 	}
+
 </style>

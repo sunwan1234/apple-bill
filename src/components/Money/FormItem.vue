@@ -17,7 +17,7 @@
   import eventBus from '@/bus.ts';
 
   @Component
-  export default class Notes extends Vue {
+  export default class FormItem extends Vue {
     value = '';
 
     @Prop(String) output: string | undefined;

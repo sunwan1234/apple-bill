@@ -9,10 +9,12 @@
 			</li>
 
 			<li class="new">
-				<button @click="create('out')">
-					<Icon name="plus"></Icon>
-					新增
-				</button>
+				<router-link to="/labels/edit">
+					<button>
+						<Icon name="plus"></Icon>
+						新增
+					</button>
+				</router-link>
 			</li>
 		</ul>
 		<ul class="current in" v-if="!isNewTag && isShow === '+'">
@@ -23,10 +25,12 @@
 				{{ item.name }}
 			</li>
 			<li class="new">
-				<button @click="create('in')">
-					<Icon name="plus"></Icon>
-					新增
-				</button>
+				<router-link to="/labels/edit">
+					<button>
+						<Icon name="plus"></Icon>
+						新增
+					</button>
+				</router-link>
 			</li>
 		</ul>
 

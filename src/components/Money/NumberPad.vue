@@ -1,6 +1,6 @@
 <template>
 	<div class="numberPad">
-		<Notes :output="  output" placeholder="写点备注吧..." ></Notes>
+		<FormItem :output="  output" placeholder="写点备注吧..." ></FormItem>
 		<div class="buttons">
 			<button @click="inputContent">1</button>
 			<button @click="inputContent">2</button>
@@ -25,10 +25,10 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import Notes from '@/components/Money/Notes.vue';
+  import FormItem from '@/components/Money/FormItem.vue';
 
   @Component({
-    components: {Notes}
+    components: {FormItem}
   })
 
   export default class NumberPad extends Vue {

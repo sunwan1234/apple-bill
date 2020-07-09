@@ -7,7 +7,7 @@
 			</header>
 			<div class="input-new-label">
 				<div class="title">新建标签名称</div>
-				<Notes isNewTag="+" placeholder="限3个汉字或5个英文字母..."></Notes>
+				<FormItem isNewTag="+" placeholder="限3个汉字或5个英文字母..."></FormItem>
 			</div>
 			<div class="svgs">
 				<div class="svg-title">选择图标</div>
@@ -15,8 +15,8 @@
 
 
 			</div>
-			<div class="createTag-wrapper">
-				<button class="createTag">保存新标签</button>
+			<div class="button-wrapper">
+				<Button>保存新标签</Button>
 			</div>
 
 		</div>
@@ -29,11 +29,12 @@
   import {Component, Watch} from 'vue-property-decorator';
   import Types from '@/components/Money/Types.vue';
   import tagListModel from '@/models/tagListModel';
-  import Notes from '@/components/Money/Notes.vue';
   import Tags from '@/components/Money/Tags.vue';
+  import FormItem from '@/components/Money/FormItem.vue';
+  import Button from '@/components/Button.vue';
 
   @Component({
-    components: {Tags, Notes, Types}
+    components: {Button, FormItem, Tags, Types}
   })
   export default class EditLabel extends Vue {
     record: RecordItem = {
@@ -46,14 +47,10 @@
     };
 
 
-
     @Watch('record.type', {immediate: true})
     onRecordTypeChange(value) {
       this.tag.type = value;
     }
-
-
-
 
 
   }
@@ -124,16 +121,9 @@
 
 	}
 
-	.createTag {
-		background: #fed058;
-		color: #333;
-		border-radius: 4px;
-		border: none;
-		height: 40px;
-		padding: 0 16px;
-
-		&-wrapper {
-			text-align: center;
-		}
+	.button-wrapper {
+		text-align: center;
+		margin-top: 10px;
 	}
+
 </style>
