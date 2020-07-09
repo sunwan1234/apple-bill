@@ -11,7 +11,7 @@
 					<Icon :name="item.svg"></Icon>
 					<span>{{ item.name }}</span>
 				</span>
-					<Icon :name="'delete2'"></Icon>
+					<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
 				</li>
 			</ol>
 			<ol class="labels" v-if=" isShow === '+'">
@@ -83,6 +83,10 @@
       }
     }
 
+    deleteTag(id: string) {
+      tagListModel.remove(id)
+
+		}
 
   }
 </script>

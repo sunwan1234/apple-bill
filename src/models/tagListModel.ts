@@ -1,5 +1,6 @@
 const localStorageKeyName = 'tagList';
 type Tag = {
+  id: string;
   svg: string;
   name: string;
   type: string;
@@ -13,28 +14,31 @@ type TagListModel = {
   create: (name: string, type: string) => 'success' | 'duplicated'; // 联合类型
   save: () => void;
   saveDefault: () => void;
+  newDataId: number;
 }
 const tagListModel: TagListModel = {
   defaultData: [
-    {svg: 'meal', name: '餐饮', type: '-'},
-    {svg: 'shop', name: '购物', type: '-'},
-    {svg: 'everyday', name: '日用', type: '-'},
-    {svg: 'transport', name: '交通', type: '-'},
-    {svg: 'sport2', name: '运动', type: '-'},
-    {svg: 'fun', name: '娱乐', type: '-'},
-    {svg: 'cloth', name: '服饰', type: '-'},
-    {svg: 'pet', name: '宠物', type: '-'},
-    {svg: 'in-redpocket', name: '红包', type: '+'},
-    {svg: 'in-rent', name: '租金', type: '+'},
-    {svg: 'in-gift', name: '礼金', type: '+'},
-    {svg: 'in-get', name: '收款', type: '+'},
-    {svg: 'in-manage', name: '理财', type: '+'},
-    {svg: 'in-annual', name: '年终奖', type: '+'},
-    {svg: 'in-other', name: '其他', type: '+'}
+    {id: '1', svg: 'meal', name: '餐饮', type: '-'},
+    {id: '2', svg: 'shop', name: '购物', type: '-'},
+    {id: '3', svg: 'everyday', name: '日用', type: '-'},
+    {id: '4', svg: 'transport', name: '交通', type: '-'},
+    {id: '5', svg: 'sport2', name: '运动', type: '-'},
+    {id: '6', svg: 'fun', name: '娱乐', type: '-'},
+    {id: '7', svg: 'cloth', name: '服饰', type: '-'},
+    {id: '8', svg: 'pet', name: '宠物', type: '-'},
+    {id: '9', svg: 'in-redpocket', name: '红包', type: '+'},
+    {id: '10', svg: 'in-rent', name: '租金', type: '+'},
+    {id: '11', svg: 'in-gift', name: '礼金', type: '+'},
+    {id: '12', svg: 'in-get', name: '收款', type: '+'},
+    {id: '13', svg: 'in-manage', name: '股票', type: '+'},
+    {id: '14', svg: 'in-manage2', name: '基金', type: '+'},
+    {id: '15', svg: 'in-annual', name: '年终奖', type: '+'},
+    {id: '16', svg: 'in-other', name: '其他', type: '+'}
   ],
-  data:[],
+  data: [],
   n: 0,
   newTag: 1,
+  newDataId: 17,
 
   fetch() {
     if (this.n === 0) {
@@ -53,12 +57,16 @@ const tagListModel: TagListModel = {
   create(name: string, type: string) {
     const names = this.data.map(item => item.name);
     if (names.indexOf(name) >= 0) {return 'duplicated';}
-    this.data.push({'svg': 'new-' + this.newTag, 'name': name, 'type': type});
+    this.data.push({'id': this.newDataId.toString(),'svg': 'new-' + this.newTag, 'name': name, 'type': type});
     this.newTag += 1;
-    console.log(this.data[this.data.length - 1])
-    this.save()
-    return 'success'
-  }
+    this.newDataId += 1
+    console.log(this.data[this.data.length - 1]);
+    this.save();
+    return 'success';
+  },
+  // remove(id: string) {
+  //
+  // }
 
 };
 
