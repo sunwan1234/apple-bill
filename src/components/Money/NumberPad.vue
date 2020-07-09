@@ -82,12 +82,10 @@
 	.numberPad {
 		background: rgb(254, 208, 88);
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		flex-direction: column;
 		flex-grow: 1;
-		flex-shrink: 1;
-		min-height: 0;
-		min-width: 0;
+
 
 		.output {
 			@extend %clearFix;
@@ -99,8 +97,9 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-around;
-			padding: 5px;
 			flex-grow: 1;
+			padding: 2px;
+			margin: 1px 3px;
 
 
 			> button {

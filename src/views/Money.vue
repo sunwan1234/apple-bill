@@ -1,12 +1,12 @@
 <template>
 	<Layout>
-		<Types :value.sync="account.type" @update:selectedTag="onUpdateTag">
+		<Types :value.sync="recordItem.type" @update:selectedTag="onUpdateTag">
 		</Types>
-		<Tags :is-show="account.type" @update:tag="onUpdateTag"
+		<Tags :is-show="recordItem.type" @update:tag="onUpdateTag"
 					:out-data-source.sync="outputTags"
 					:in-data-source.sync="inputTags"
 		></Tags>
-		<NumberPad @update:value="onUpdateAmount" @submit="saveAccount"></NumberPad>
+		<NumberPad @update:value="onUpdateAmount" @submit="saveRecord"></NumberPad>
 
 	</Layout>
 
@@ -14,14 +14,14 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Watch} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
   import eventBus from '@/bus.ts';
-  import accountListModel from '@/models/accountListModel';
+  import recordListModel from '@/models/recordListModel';
 
-  const accountList = accountListModel.fetch();
+  const recordList = recordListModel.fetch();
 
   @Component({
     components: {Types, Tags, NumberPad}
@@ -57,33 +57,28 @@
     ];
 
 
-    accountList: AccountItem[] = accountList;
-    account: AccountItem = {
+    recordList: RecordItem[] = recordList;
+    recordItem: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
 
 
     onUpdateTag(value: string) {
-      this.account.tag = value;
+      this.recordItem.tag = value;
     }
 
     onUpdateAmount(value: string) {
-      this.account.amount = parseFloat(value);
+      this.recordItem.amount = parseFloat(value);
     }
 
     onUpdateNote(value: string) {
-      this.account.note = value;
+      this.recordItem.note = value;
     }
 
-    saveAccount(account: AccountItem) {
-      accountListModel.create(account)
+    saveRecord() {
+      recordListModel.create(this.recordItem)
     }
 
-
-    @Watch('accountList')
-    onAccountListChange() {
-      accountListModel.save()
-    }
 
     created() {
       eventBus.$on('update:note', (note: string) => {

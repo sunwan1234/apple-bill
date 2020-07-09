@@ -1,4 +1,4 @@
-type AccountItem = {
+type RecordItem = {
   type: string;
   tag: string;
   amount: number;
