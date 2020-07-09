@@ -2,11 +2,12 @@
 	<div class="notes-wrapper">
 		<label class="notes">
 			<span class="name">备注</span>
-			<input v-model="value"
+			<input :value="value"
+						 @input="onValueChange($event.target.value)"
 						 type="text"
 						 :placeholder="placeholder">
-			<span class="output" v-if="isNewTag === '+'">{{output}}</span>
-			<Icon name="pencil"  v-if="isNewTag === '+'"></Icon>
+			<span class="output">{{output}}</span>
+			<Icon name="pencil" v-if="isNewTag === '+'"></Icon>
 		</label>
 	</div>
 </template>
@@ -18,15 +19,19 @@
 
   @Component
   export default class FormItem extends Vue {
-    value = '';
 
     @Prop(String) output: string | undefined;
     @Prop(String) placeholder?: string;
     @Prop(String) isNewTag: string | undefined;
+    @Prop(String) isNumberPad: string | undefined;
+    @Prop({default: ''}) value: string | undefined;
 
     @Watch('value')
     onValueChange(value: string) {
-      eventBus.$emit('update:note', value);
+      eventBus.$emit('update:note:money', value);
+      if (this.isNewTag === '+') {
+        this.$emit('update:tagName', value);
+      }
     }
 
   }
@@ -42,13 +47,14 @@
 		align-items: center;
 		border: 1px solid #333;
 		border-radius: 16px;
+		margin: 8px;
 
 		.name {
 			padding-right: 16px;
 		}
 
 		input {
-			height: 56px;
+			height: 36px;
 			flex-grow: 1;
 			background: transparent;
 			border: none;
@@ -68,6 +74,8 @@
 
 	.notes-wrapper {
 		position: relative;
-		margin: 4px;
+		background: #fed058;
+		padding-top: 3px;
+
 	}
 </style>

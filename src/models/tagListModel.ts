@@ -11,7 +11,7 @@ type TagListModel = {
   n: number;
   newTag: number;
   fetch: () => Tag[];
-  create: (name: string, type: string) => 'success' | 'duplicated'; // 联合类型
+  create: (tag: Tag) => 'success' | 'duplicated'; // 联合类型
   save: () => void;
   saveDefault: () => void;
   newDataId: number;
@@ -60,11 +60,10 @@ const tagListModel: TagListModel = {
   saveDefault() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.defaultData));
   },
-  create(name: string, type: string) {
+  create(newTag: Tag) {
     const names = this.data.map(item => item.name);
-    if (names.indexOf(name) >= 0) {return 'duplicated';}
-    this.data.push({'id': this.newDataId.toString(),'svg': 'new-' + this.newTag, 'name': name, 'type': type});
-    this.newTag += 1;
+    if (names.indexOf(newTag.name) >= 0) {return 'duplicated';}
+    this.data.push({'id': this.newDataId.toString(),'svg': newTag.svg, 'name': newTag.name, 'type': newTag.type});
     this.newDataId += 1
     console.log(this.data[this.data.length - 1]);
     this.save();

@@ -1,6 +1,6 @@
 <template>
 	<div class="numberPad">
-		<FormItem :output="  output" placeholder="写点备注吧..." ></FormItem>
+		<div class="output">{{output}}</div>
 		<div class="buttons">
 			<button @click="inputContent">1</button>
 			<button @click="inputContent">2</button>
@@ -68,9 +68,9 @@
     }
 
     ok() {
-      this.$emit('update:value', this.output)
-			this.$emit('submit', this.output)
-			this.output = '0'
+      this.$emit('update:value', this.output);
+      this.$emit('submit', this.output);
+      this.output = '0';
     }
 
   }
@@ -91,6 +91,13 @@
 			@extend %clearFix;
 			font-size: 34px;
 			font-family: Consolas, monospace;
+			text-align: right;
+			border: 1px solid #333;
+			border-radius: 10px;
+			background: white;
+			padding: 0;
+			padding-right: 5px;
+			margin: 3px;
 		}
 
 		.buttons {

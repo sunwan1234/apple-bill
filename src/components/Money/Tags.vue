@@ -74,7 +74,10 @@
         this.selectedTags.pop();
         this.selectedTags.push(tag);
       }
-      this.$emit('update:tag', this.selectedTags[0]);
+      this.$emit('update:tag:money', this.selectedTags[0]);
+      if(this.isNewTag === '+') {
+        this.$emit('update:new:tag', this.selectedTags[0])
+			}
     }
 
     create(tagType: string) {

@@ -1,5 +1,6 @@
 <template>
 	<layout>
+		{{this.tag}}
 		<div class="edit-label-wrapper">
 			<header>
 				<span>设定自定义标签</span>
@@ -7,16 +8,18 @@
 			</header>
 			<div class="input-new-label">
 				<div class="title">新建标签名称</div>
-				<FormItem isNewTag="+" placeholder="限3个汉字或5个英文字母..."></FormItem>
+				<FormItem isNewTag="+" placeholder="限3个汉字或5个英文字母..."
+									@update:tagName="onTagNameChange"
+				></FormItem>
 			</div>
 			<div class="svgs">
 				<div class="svg-title">选择图标</div>
-				<Tags is-new-tag="+" :new-data-source="this.newTagList"></Tags>
-
-
+				<Tags is-new-tag="+" :new-data-source="this.newTagList"
+				@update:new:tag="onSelectedTagChange"
+				></Tags>
 			</div>
 			<div class="button-wrapper">
-				<Button>保存新标签</Button>
+				<Button @click="saveTag">保存新标签</Button>
 			</div>
 
 		</div>
@@ -41,7 +44,7 @@
       type: '-', tag: '', amount: 0, note: '',
     };
     newTagList = tagListModel.getNewTagList();
-    selectedTags: string[] = [];
+
     tag: Tag = {
       type: '-', name: '', svg: '', id: '',
     };
@@ -51,6 +54,19 @@
     onRecordTypeChange(value) {
       this.tag.type = value;
     }
+
+    onTagNameChange(value: string) {
+      this.tag.name = value;
+    }
+
+    onSelectedTagChange(value: string) {
+      this.tag.svg = value
+		}
+
+		saveTag(){
+      tagListModel.create(this.tag)
+		}
+
 
 
   }

@@ -1,11 +1,13 @@
 <template>
 	<Layout>
+		{{this.recordItem}}
 		<Types :value.sync="recordItem.type" @update:selectedTag="onUpdateTag">
 		</Types>
-		<Tags :is-show="recordItem.type" @update:tag="onUpdateTag"
+		<Tags :is-show="recordItem.type" @update:tag:money="onUpdateTag"
 					:out-data-source.sync="outputTags"
 					:in-data-source.sync="inputTags"
 		></Tags>
+		<FormItem  placeholder="写点备注吧..." is-number-pad="+"></FormItem>
 		<NumberPad @update:value="onUpdateAmount" @submit="saveRecord"></NumberPad>
 
 	</Layout>
@@ -21,13 +23,14 @@
   import eventBus from '@/bus.ts';
   import recordListModel from '@/models/recordListModel';
   import tagListModel from '@/models/tagListModel';
+  import FormItem from '@/components/Money/FormItem.vue';
 
   const recordList = recordListModel.fetch();
   const tagList = tagListModel.fetch();
 
 
   @Component({
-    components: {Types, Tags, NumberPad}
+    components: {Types, Tags, NumberPad, FormItem}
   })
   export default class Money extends Vue {
     // outputTags: Array<Record<string, string>> = [
@@ -88,13 +91,13 @@
 
 
     created() {
-      eventBus.$on('update:note', (note: string) => {
+      eventBus.$on('update:note:money', (note: string) => {
         this.onUpdateNote(note);
       });
     }
 
     beforeDestroy() {
-      eventBus.$off('update:note');
+      eventBus.$off('update:note:money');
     }
 
   }
