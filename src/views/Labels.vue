@@ -1,11 +1,9 @@
 <template>
 	<Layout>
-		{{account.type}}
-		{{isShow}}
-		<Types :value.sync="account.type">
+		{{tags}}
+		<Types :value.sync="record.type">
 		</Types>
 		<div class="labels-wrapper">
-
 			<ol class="labels" v-if=" isShow === '-'">
 				<li v-for="(item, index) in this.outputTags"
 						:key="index">
@@ -15,14 +13,6 @@
 				</span>
 					<Icon :name="'delete2'"></Icon>
 				</li>
-				<li>i</li>
-				<li>i</li>
-				<li>i</li>
-				<li>i</li>
-				<li>i</li>
-				<li>i</li>
-				<li>i</li>
-				<li>i</li>
 			</ol>
 			<ol class="labels" v-if=" isShow === '+'">
 				<li v-for="(item, index) in this.inputTags"
@@ -35,8 +25,11 @@
 					<Icon :name="'delete2'"></Icon>
 				</li>
 			</ol>
-			<div class="createTag-wrapper">
-				<button class="createTag" >新建标签</button>
+			<div class="createTag-wrapper" v-if=" isShow === '-'">
+				<button class="createTag" @click="createTag('-')">新建支出标签</button>
+			</div>
+			<div class="createTag-wrapper" v-if=" isShow === '+'">
+				<button class="createTag" @click="createTag('+')">新建收入标签</button>
 			</div>
 
 		</div>
@@ -49,52 +42,45 @@
   import {Component, Watch} from 'vue-property-decorator';
   import recordListModel from '@/models/recordListModel';
   import Types from '@/components/Money/Types.vue';
+  import tagListModel from '@/models/tagListModel';
 
 
-  const accountList = recordListModel.fetch();
-
+  tagListModel.fetch();
   @Component({
     components: {Types}
   })
   export default class Labels extends Vue {
-    outputTags: Array<Record<string, string>> = [
-      {
-        svg: 'meal',
-        name: '餐饮'
-      },
-      {
-        svg: 'shop',
-        name: '购物'
-      },
-      {
-        svg: 'everyday',
-        name: '日用'
-      },
-      {svg: 'transport', name: '交通'},
-      {svg: 'sport2', name: '运动'},
-      {svg: 'fun', name: '娱乐'},
-      {svg: 'cloth', name: '服饰'},
-      {svg: 'pet', name: '宠物'}
-    ];
-    inputTags: Array<Record<string, string>> = [
-      {svg: 'in-redpocket', name: '红包'},
-      {svg: 'in-rent', name: '租金'},
-      {svg: 'in-gift', name: '礼金'},
-      {svg: 'in-get', name: '收款'},
-      {svg: 'in-manage', name: '理财'},
-      {svg: 'in-annual', name: '年终奖'},
-      {svg: 'in-other', name: '其他'}
-    ];
+    tags = tagListModel.data;
+    outputTags = this.tags.filter((item) => item.type === '-');
+    inputTags = this.tags.filter((item) => item.type === '+');
 
-    accountList: RecordItem[] = accountList;
-    account: RecordItem = {
+
+    record: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
-    isShow!: string | undefined;
+    isShow!: string;
 
-    @Watch('account.type', {immediate: true})
-    onAccountTypeChange(value) {
+    @Watch('record.type', {immediate: true})
+    onRecordTypeChange(value) {
       this.isShow = value;
+    }
+
+    @Watch('tags', {immediate: true})
+    onTagChange(tags) {
+      this.outputTags = tags.filter((item) => item.type === '-');
+      this.inputTags = tags.filter((item) => item.type === '+');
+    }
+
+    createTag(type: string) {
+      const name = window.prompt('请输入标签名');
+      if (name) {
+        const message = tagListModel.create(name, type);
+        if(message === 'duplicated') {
+          window.alert('标签名重复')
+				} else if(message === 'success'){
+          window.alert('添加成功')
+				}
+      }
     }
 
 
@@ -106,12 +92,14 @@
 		display: flex;
 		flex-direction: column;
 	}
+
 	.labels {
 		display: flex;
 		flex-wrap: nowrap;
 		flex-direction: column;
 		font-size: 16px;
 		max-height: 65vh;
+
 		li {
 			display: flex;
 			flex-direction: row;
@@ -137,6 +125,7 @@
 			}
 		}
 	}
+
 	.createTag {
 		background: #fed058;
 		color: #333;
@@ -144,6 +133,7 @@
 		border: none;
 		height: 40px;
 		padding: 0 16px;
+
 		&-wrapper {
 			text-align: center;
 			padding: 16px;

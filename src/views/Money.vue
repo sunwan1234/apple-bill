@@ -20,42 +20,49 @@
   import Types from '@/components/Money/Types.vue';
   import eventBus from '@/bus.ts';
   import recordListModel from '@/models/recordListModel';
+  import tagListModel from '@/models/tagListModel';
 
   const recordList = recordListModel.fetch();
+  const tagList = tagListModel.fetch();
+
 
   @Component({
     components: {Types, Tags, NumberPad}
   })
   export default class Money extends Vue {
-    outputTags: Array<Record<string, string>> = [
-      {
-        svg: 'meal',
-        name: '餐饮'
-      },
-      {
-        svg: 'shop',
-        name: '购物'
-      },
-      {
-        svg: 'everyday',
-        name: '日用'
-      },
-      {svg: 'transport', name: '交通'},
-      {svg: 'sport2', name: '运动'},
-      {svg: 'fun', name: '娱乐'},
-      {svg: 'cloth', name: '服饰'},
-      {svg: 'pet', name: '宠物'}
-    ];
-    inputTags: Array<Record<string, string>> = [
-      {svg: 'in-redpocket', name: '红包'},
-      {svg: 'in-rent', name: '租金'},
-      {svg: 'in-gift', name: '礼金'},
-      {svg: 'in-get', name: '收款'},
-      {svg: 'in-manage', name: '理财'},
-      {svg: 'in-annual', name: '年终奖'},
-      {svg: 'in-other', name: '其他'}
-    ];
+    // outputTags: Array<Record<string, string>> = [
+    //   {	svg: 'meal',
+    //     name: '餐饮',
+    // 		type: '-'
+    //   },
+    //   {
+    //     svg: 'shop',
+    //     name: '购物',
+    //     type: '-'
+    //   },
+    //   {
+    //     svg: 'everyday',
+    //     name: '日用',
+    //     type: '-'
+    //   },
+    //   {svg: 'transport', name: '交通', type:'-'},
+    //   {svg: 'sport2', name: '运动', type:'-'},
+    //   {svg: 'fun', name: '娱乐', type:'-'},
+    //   {svg: 'cloth', name: '服饰', type:'-'},
+    //   {svg: 'pet', name: '宠物', type:'-'}
+    // ];
+    // inputTags: Array<Record<string, string>> = [
+    //   {svg: 'in-redpocket', name: '红包', type:'+'},
+    //   {svg: 'in-rent', name: '租金', type:'+'},
+    //   {svg: 'in-gift', name: '礼金', type:'+'},
+    //   {svg: 'in-get', name: '收款', type:'+'},
+    //   {svg: 'in-manage', name: '理财', type:'+'},
+    //   {svg: 'in-annual', name: '年终奖', type:'+'},
+    //   {svg: 'in-other', name: '其他', type:'+'}
+    // ];
 
+    outputTags = tagList.filter((item) => item.type === '-');
+    inputTags = tagList.filter((item) => item.type === '+');
 
     recordList: RecordItem[] = recordList;
     recordItem: RecordItem = {
@@ -76,7 +83,7 @@
     }
 
     saveRecord() {
-      recordListModel.create(this.recordItem)
+      recordListModel.create(this.recordItem);
     }
 
 

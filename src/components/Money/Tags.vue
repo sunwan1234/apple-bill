@@ -37,6 +37,7 @@
   import {Component, Prop} from 'vue-property-decorator';
 
 
+
   @Component
   export default class Tags extends Vue {
     @Prop(String) isShow: string | undefined;
@@ -67,12 +68,14 @@
       } else {
         if (tagType === 'out') {
           if (this.outDataSource) {
-            this.$emit('update:outDataSource', [...this.outDataSource, {svg:'newsvg', 'name': name}])
+            console.log('----update')
+						console.log({svg:'newsvg', 'name': name, 'type':'-'})
+            this.$emit('update:outDataSource', [...this.outDataSource, {svg:'newsvg', 'name': name, 'type':'-'}])
           }
         }
         if (tagType === 'in') {
           if (this.inDataSource) {
-            this.$emit('update:inDataSource', [...this.inDataSource, {svg: 'newsvg', 'name': name}]);
+            this.$emit('update:inDataSource', [...this.inDataSource, {svg: 'newsvg', 'name': name, 'type': '+'}]);
           }
         }
 
