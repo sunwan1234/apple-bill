@@ -49,18 +49,20 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop, PropSync, Watch} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
+  import store from '@/store/index2';
 
 
   @Component
   export default class Tags extends Vue {
     @Prop(String) isShow: string | undefined;
-    @Prop(Array) outDataSource: Array<Record<string, string>> | undefined;
-    @Prop(Array) inDataSource: Array<Record<string, string>> | undefined;
     @Prop(String) isNewTag: string | undefined;
-    @Prop(Array) newDataSource: string[] | undefined;
-
     @Prop(Array) fuckTags: string[] | undefined;
+
+    tags = store.tagList;
+    outDataSource = store.findTag('-');
+    inDataSource = store.findTag('+');
+    newDataSource = store.getNewTagList()
 
 
     toggle(tag: string) {
@@ -76,29 +78,10 @@
         if (this.isNewTag === '+') {
           this.$emit('update:new:tag', this.fuckTags);
         } else {
-          console.log('0000')
           this.$emit('update:fucktags', this.fuckTags);
         }
 			}
     }
-
-
-      // toggle(tag: string) {
-      //   // 每次只能选中一个
-      //   if (this.selectedTags.length === 0) {
-      //     this.selectedTags.push(tag);
-      //   } else {
-      //     this.selectedTags.pop();
-      //     this.selectedTags.push(tag);
-      //   }
-      //
-      //   if (this.isNewTag === '+') {
-      //     this.$emit('update:new:tag', this.selectedTags[0]);
-      //   } else {
-      //     this.$emit('update:value', this.selectedTags[0]);
-      //   }
-      // }
-
 
     }
 </script>
@@ -135,7 +118,9 @@
 		}
 	}
 
-
+	.tags::-webkit-scrollbar {
+		display: none;
+	}
 	.tags {
 		flex-shrink: 1;
 		overflow-y: auto;

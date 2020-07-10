@@ -16,7 +16,7 @@
 			</div>
 			<div class="svgs">
 				<div class="svg-title">选择图标</div>
-				<Tags is-new-tag="+" :new-data-source="this.newTagList"
+				<Tags is-new-tag="+"
 							@update:new:tag="onSelectedTagChange"
 							:fuck-tags="selectedTags"
 				></Tags>
@@ -46,7 +46,7 @@
     record: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
-    newTagList = store.defaultTagList
+
 
     tag: Tag = {
       type: '-', name: '', svg: '', id: '',

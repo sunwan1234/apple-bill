@@ -4,10 +4,7 @@
 		<Types :value.sync="recordItem.type">
 		</Types>
 		<Tags :fuckTags="fuckTags" @update:fucktags="onFuckChange"
-					:is-show="recordItem.type"
-					:out-data-source.sync="outputTags"
-					:in-data-source.sync="inputTags"
-		></Tags>
+					:is-show="recordItem.type"></Tags>
 		<FormItem :value="recordItem.note" @update:value="onUpdateNote" placeholder="写点备注吧..." is-number-pad="+"></FormItem>
 		<NumberPad @update:value="onUpdateAmount" @submit="saveRecord"></NumberPad>
 
@@ -56,9 +53,9 @@
 
     saveRecord() {
       console.log(this.recordItem);
-      store.createRecord(this.recordItem)
+      store.createRecord(this.recordItem);
       this.recordItem = {
-        type: '-', tag: '', amount: 0, note: '',
+        type: this.recordItem.type, tag: '', amount: 0, note: '',
       };
       this.fuckTags = [];
     }

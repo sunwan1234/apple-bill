@@ -76,12 +76,8 @@
 
     deleteTag(id) {
       console.log(id);
-      const result = store.removeTag(id);
-      if (result) {
-        window.alert('删除成功');
-      } else {
-        window.alert('没有找到该标签');
-      }
+      store.removeTag(id);
+
     }
 
 
