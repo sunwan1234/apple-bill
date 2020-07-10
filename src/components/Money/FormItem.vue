@@ -1,5 +1,5 @@
 <template>
-	<div class="notes-wrapper">
+	<div :class="isNewTag === '+'? 'notes-wrapper notes-wrapper-no-bg' : 'notes-wrapper '">
 		<label class="notes">
 			<span class="name">备注</span>
 			<input :value="value"
@@ -76,6 +76,12 @@
 		position: relative;
 		background: #fed058;
 		padding-top: 3px;
+		flex-shrink: 1;
+		min-height: 0;
 
+	}
+
+	.notes-wrapper-no-bg {
+		background: white;
 	}
 </style>

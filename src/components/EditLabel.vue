@@ -64,7 +64,15 @@
 		}
 
 		saveTag(){
-      tagListModel.create(this.tag)
+      const message = tagListModel.create(this.tag)
+			if(message === 'success') {
+			  window.alert('创建标签成功')
+        this.$router.push({ path: '/labels' })
+			} else if (message === 'duplicated') {
+			  window.alert('标签名重复，无法创建')
+			}
+
+
 		}
 
 
