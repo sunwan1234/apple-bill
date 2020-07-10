@@ -17,7 +17,8 @@
 			<div class="svgs">
 				<div class="svg-title">选择图标</div>
 				<Tags is-new-tag="+" :new-data-source="this.newTagList"
-				@update:new:tag="onSelectedTagChange"
+							@update:new:tag="onSelectedTagChange"
+							:fuck-tags="selectedTags"
 				></Tags>
 			</div>
 			<div class="button-wrapper">
@@ -51,6 +52,8 @@
       type: '-', name: '', svg: '', id: '',
     };
 
+    selectedTags: string[] = [];
+
 
     @Watch('record.type', {immediate: true})
     onRecordTypeChange(value) {
@@ -61,22 +64,21 @@
       this.tag.name = value;
     }
 
-    onSelectedTagChange(value: string) {
-      this.tag.svg = value
-		}
+    onSelectedTagChange(value: string[]) {
+      this.tag.svg = value[0];
+    }
 
-		saveTag(){
-      const message = tagListModel.create(this.tag)
-			if(message === 'success') {
-			  window.alert('创建标签成功')
-        this.$router.push({ path: '/labels' })
-			} else if (message === 'duplicated') {
-			  window.alert('标签名重复，无法创建')
-			}
+    saveTag() {
+      const message = tagListModel.create(this.tag);
+      if (message === 'success') {
+        window.alert('创建标签成功');
+        this.$router.push({path: '/labels'});
+      } else if (message === 'duplicated') {
+        window.alert('标签名重复，无法创建');
+      }
 
 
-		}
-
+    }
 
 
   }

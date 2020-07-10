@@ -2,7 +2,7 @@
 	<div class="tags">
 		<ul class="current out" v-if="!isNewTag && isShow === '-'">
 			<li v-for="(item, index) in this.outDataSource"
-					:class="{selected: selectedTags.indexOf(item.name) >= 0}"
+					:class="{selected: fuckTags.indexOf(item.name) >= 0}"
 					:key="index" @click="toggle(item.name)">
 				<Icon :name="item.svg"></Icon>
 				{{ item.name }}
@@ -19,7 +19,7 @@
 		</ul>
 		<ul class="current in" v-if="!isNewTag && isShow === '+'">
 			<li v-for="(item, index) in this.inDataSource"
-					:class="{selected: selectedTags.indexOf(item.name) >= 0}"
+					:class="{selected: fuckTags.indexOf(item.name) >= 0}"
 					:key="index" @click="toggle(item.name)">
 				<Icon :name="item.svg"></Icon>
 				{{ item.name }}
@@ -37,7 +37,7 @@
 		<div class="tag-list" v-if="isNewTag === '+'">
 			<div class="tag-wrapper">
 				<div v-for="(item, index) in newDataSource" :key="index"
-						 :class="{selected: selectedTags.indexOf(item) >= 0}"
+						 :class="{selected: fuckTags.indexOf(item) >= 0}"
 						 @click="toggle(item)">
 					<Icon :name="item"></Icon>
 				</div>
@@ -49,7 +49,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop} from 'vue-property-decorator';
+  import {Component, Prop, PropSync, Watch} from 'vue-property-decorator';
 
 
   @Component
@@ -58,51 +58,49 @@
     @Prop(Array) outDataSource: Array<Record<string, string>> | undefined;
     @Prop(Array) inDataSource: Array<Record<string, string>> | undefined;
     @Prop(String) isNewTag: string | undefined;
-    @Prop(Array) newDataSource: string[] | undefined
+    @Prop(Array) newDataSource: string[] | undefined;
 
-    mounted() {
-      console.log(this.outDataSource);
-    }
+    @Prop(Array) fuckTags: string[] | undefined;
 
-    selectedTags: string[] = [];
 
     toggle(tag: string) {
       // 每次只能选中一个
-      if (this.selectedTags.length === 0) {
-        this.selectedTags.push(tag);
-      } else {
-        this.selectedTags.pop();
-        this.selectedTags.push(tag);
-      }
-      this.$emit('update:tag:money', this.selectedTags[0]);
-      if(this.isNewTag === '+') {
-        this.$emit('update:new:tag', this.selectedTags[0])
+			if(this.fuckTags) {
+        if (this.fuckTags.length === 0) {
+          this.fuckTags.push(tag);
+        } else {
+          this.fuckTags.pop();
+          this.fuckTags.push(tag);
+        }
+
+        if (this.isNewTag === '+') {
+          this.$emit('update:new:tag', this.fuckTags);
+        } else {
+          console.log('0000')
+          this.$emit('update:fucktags', this.fuckTags);
+        }
 			}
     }
 
-    create(tagType: string) {
-      const name = window.prompt('请输入标签名');
-      if (name === '') {
-        window.alert('标签名不能为空');
-      } else {
-        if (tagType === 'out') {
-          if (this.outDataSource) {
-            console.log('----update');
-            console.log({svg: 'newsvg', 'name': name, 'type': '-'});
-            this.$emit('update:outDataSource', [...this.outDataSource, {svg: 'newsvg', 'name': name, 'type': '-'}]);
-          }
-        }
-        if (tagType === 'in') {
-          if (this.inDataSource) {
-            this.$emit('update:inDataSource', [...this.inDataSource, {svg: 'newsvg', 'name': name, 'type': '+'}]);
-          }
-        }
 
-      }
+      // toggle(tag: string) {
+      //   // 每次只能选中一个
+      //   if (this.selectedTags.length === 0) {
+      //     this.selectedTags.push(tag);
+      //   } else {
+      //     this.selectedTags.pop();
+      //     this.selectedTags.push(tag);
+      //   }
+      //
+      //   if (this.isNewTag === '+') {
+      //     this.$emit('update:new:tag', this.selectedTags[0]);
+      //   } else {
+      //     this.$emit('update:value', this.selectedTags[0]);
+      //   }
+      // }
+
 
     }
-
-  }
 </script>
 
 <style scoped lang="scss">

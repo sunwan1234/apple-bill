@@ -1,9 +1,10 @@
 <template>
 	<Layout>
 		{{this.recordItem}}
-		<Types :value.sync="recordItem.type" @update:selectedTag="onUpdateTag">
+		<Types :value.sync="recordItem.type" >
 		</Types>
-		<Tags :is-show="recordItem.type" @update:tag:money="onUpdateTag"
+		<Tags :fuckTags="fuckTags" @update:fucktags="onFuckChange"
+					:is-show="recordItem.type"
 					:out-data-source.sync="outputTags"
 					:in-data-source.sync="inputTags"
 		></Tags>
@@ -67,14 +68,17 @@
     outputTags = tagList.filter((item) => item.type === '-');
     inputTags = tagList.filter((item) => item.type === '+');
 
+    fuckTags: string[] = [];
+
+
     recordList: RecordItem[] = recordList;
     recordItem: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
 
-
-    onUpdateTag(value: string) {
-      this.recordItem.tag = value;
+    onFuckChange(value: string[]) {
+      this.fuckTags = value;
+      this.recordItem.tag = value[0];
     }
 
     onUpdateAmount(value: string) {
@@ -86,10 +90,12 @@
     }
 
     saveRecord() {
+      console.log(this.recordItem);
       recordListModel.create(this.recordItem);
       this.recordItem = {
         type: '-', tag: '', amount: 0, note: '',
       };
+      this.fuckTags = [];
     }
 
 

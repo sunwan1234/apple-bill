@@ -28,10 +28,11 @@
 
 
     onValueChange(value: string) {
+
       if (this.isNewTag === '+') {
-        this.$emit('update:value', value);
+        this.$emit('update:tagName', value);
       } else {
-        this.$emit('update:note:money', value);
+        this.$emit('update:value', value);
       }
     }
 
