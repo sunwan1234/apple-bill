@@ -34,7 +34,6 @@
   import Vue from 'vue';
   import {Component, Watch} from 'vue-property-decorator';
   import Types from '@/components/Money/Types.vue';
-  import tagListModel from '@/models/tagListModel';
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
@@ -46,7 +45,7 @@
     record: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
-    newTagList = tagListModel.getNewTagList();
+    newTagList = window.defaultTagList
 
     tag: Tag = {
       type: '-', name: '', svg: '', id: '',
@@ -69,18 +68,11 @@
     }
 
     saveTag() {
-      const message = tagListModel.create(this.tag);
+      const message = window.createTag(this.tag)
       if (message === 'success') {
-        window.alert('创建标签成功');
         this.$router.push({path: '/labels'});
-      } else if (message === 'duplicated') {
-        window.alert('标签名重复，无法创建');
       }
-
-
     }
-
-
   }
 </script>
 

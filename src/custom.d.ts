@@ -28,6 +28,10 @@ type TagListModel = {
 }
 
 interface Window {
+  defaultTagList: string[];
   tagList: Tag[];
   recordList: RecordItem[];
+  createTag: (tag: Tag) => 'success' | 'duplicated'; // 联合类型
+  removeTag: (id: string) => boolean;
+  findTag: (type: string) => Tag[];
 }
