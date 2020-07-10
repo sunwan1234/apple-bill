@@ -9,7 +9,7 @@
 			<div class="input-new-label">
 				<div class="title">新建标签名称</div>
 				<FormItem isNewTag="+"
-									placeholder="限3个汉字或6个英文字母..."
+									placeholder="限3个汉字..."
 									:value="tag.name"
 									@update:tagName="onTagNameChange"
 				></FormItem>
@@ -40,18 +40,15 @@
   import store from '@/store/index2';
 
   @Component({
-    components: {Button, FormItem, Tags, Types}
+    components: {Button, FormItem, Tags, Types},
   })
   export default class EditLabel extends Vue {
     record: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
-
-
     tag: Tag = {
       type: '-', name: '', svg: '', id: '',
     };
-
     selectedTags: string[] = [];
 
 

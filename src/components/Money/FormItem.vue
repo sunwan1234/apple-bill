@@ -4,8 +4,18 @@
 			<span class="name">备注</span>
 			<input :value="value"
 						 @input="onValueChange($event.target.value)"
+						 @compositionstart="onCompositionStart"
+						 @compositionend="onCompositionEnd"
+						 @keydown="onkeydown"
 						 type="text"
-						 :placeholder="placeholder">
+						 :placeholder="placeholder"
+						 maxlength="3" v-if="isNewTag === '+'"/>
+			<input :value="value"
+						 @input="onValueChange2($event.target.value)"
+						 type="text"
+						 :placeholder="placeholder"
+						 v-if="isNewTag !== '+'"/>
+
 			<span class="output">{{output}}</span>
 			<Icon name="pencil" v-if="isNewTag === '+'"></Icon>
 		</label>
@@ -22,19 +32,37 @@
 
     @Prop(String) output: string | undefined;
     @Prop(String) placeholder?: string;
-    @Prop(String) isNewTag: string | undefined;
+    @Prop({default: ''}) isNewTag: string | undefined;
     @Prop(String) isNumberPad: string | undefined;
     @Prop({default: ''}) value: string | undefined;
 
+    lock = false;
+
+    onCompositionStart() {
+      this.lock = true;
+    }
+
+    onCompositionEnd() {
+      this.lock = false;
+    }
+
+    onkeydown() {
+      this.lock = false;
+    }
+
 
     onValueChange(value: string) {
-
-      if (this.isNewTag === '+') {
+      if (!this.lock) {
         this.$emit('update:tagName', value);
-      } else {
-        this.$emit('update:value', value);
       }
+
     }
+
+    onValueChange2(value: string) {
+      this.$emit('update:value', value);
+
+    }
+
 
   }
 </script>
