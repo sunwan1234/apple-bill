@@ -45,15 +45,16 @@
   import {Component, Watch} from 'vue-property-decorator';
   import Types from '@/components/Money/Types.vue';
   import Button from '@/components/Button.vue';
+  import store from '@/store/index2';
 
 
   @Component({
     components: {Button, Types}
   })
   export default class Labels extends Vue {
-    tags = window.tagList;
-    outputTags = window.findTag('-');
-    inputTags = window.findTag('+');
+    tags = store.tagList;
+    outputTags = store.findTag('-');
+    inputTags = store.findTag('+');
 
 
     record: RecordItem = {
@@ -66,10 +67,16 @@
       this.isShow = value;
     }
 
+    @Watch('tags', {immediate: true})
+    onTagChange(tags) {
+      this.outputTags = tags.filter((item) => item.type === '-');
+      this.inputTags = tags.filter((item) => item.type === '+');
+    }
+
 
     deleteTag(id) {
       console.log(id);
-      const result = window.removeTag(id);
+      const result = store.removeTag(id);
       if (result) {
         window.alert('删除成功');
       } else {

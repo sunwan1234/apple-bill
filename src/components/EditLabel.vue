@@ -37,6 +37,7 @@
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
+  import store from '@/store/index2';
 
   @Component({
     components: {Button, FormItem, Tags, Types}
@@ -45,7 +46,7 @@
     record: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
-    newTagList = window.defaultTagList
+    newTagList = store.defaultTagList
 
     tag: Tag = {
       type: '-', name: '', svg: '', id: '',
@@ -68,7 +69,7 @@
     }
 
     saveTag() {
-      const message = window.createTag(this.tag)
+      const message = store.createTag(this.tag)
       if (message === 'success') {
         this.$router.push({path: '/labels'});
       }
