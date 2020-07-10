@@ -49,7 +49,8 @@
 
 
   @Component({
-    components: {Button, Types}
+    components: {Button, Types},
+
   })
   export default class Labels extends Vue {
     tags = store.tagList;
