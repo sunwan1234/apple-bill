@@ -14,32 +14,36 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
   import FormItem from '@/components/Money/FormItem.vue';
-  import store from '@/store/index2';
 
 
   @Component({
     components: {Types, Tags, NumberPad, FormItem},
     computed: {
       recordList() {
-        return store.recordList;
+        return this.$store.state.recordList;
       },
-      tagList() {
-        return store.tagList;
-      }
-
     }
   })
   export default class Money extends Vue {
     fuckTags: string[] = [];
-
     recordItem: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
+
+    created() {
+      this.$store.commit('fetchRecords');
+    }
+
+    @Watch('recordItem.type')
+    onTypeChange() {
+      this.recordItem.tag = '';
+      this.fuckTags = [];
+    }
 
     onFuckChange(value: string[]) {
       this.fuckTags = value;
@@ -56,7 +60,15 @@
 
     saveRecord() {
       console.log(this.recordItem);
-      store.createRecord(this.recordItem);
+      if (!this.recordItem.tag) {
+        this.clearData();
+        return window.alert('请选择一个标签');
+      }
+      this.$store.commit('createRecord', this.recordItem);
+      this.clearData();
+    }
+
+    clearData() {
       this.recordItem = {
         type: this.recordItem.type, tag: '', amount: 0, note: '',
       };
