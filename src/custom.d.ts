@@ -28,11 +28,14 @@ type TagListModel = {
 }
 
 interface Window {
-  createRecord: (record: RecordItem) => void;
-  defaultTagList: string[];
-  tagList: Tag[];
-  recordList: RecordItem[];
-  createTag: (tag: Tag) => 'success' | 'duplicated'; // 联合类型
-  removeTag: (id: string) => boolean;
-  findTag: (type: string) => Tag[];
+  store: {
+    createRecord: (record: RecordItem) => void;
+    defaultTagList: string[];
+    tagList: Tag[];
+    recordList: RecordItem[];
+    createTag: (tag: Tag) => 'success' | 'duplicated'; // 联合类型
+    removeTag: (id: string) => boolean;
+    findTag: (type: string) => Tag[];
+  };
+
 }
