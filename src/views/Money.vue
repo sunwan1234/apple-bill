@@ -21,7 +21,6 @@
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
-  import recordListModel from '@/models/recordListModel';
   import FormItem from '@/components/Money/FormItem.vue';
 
 
@@ -30,13 +29,13 @@
   })
   export default class Money extends Vue {
     tagList = window.tagList;
-    outputTags = window.findTag('-')
-    inputTags = window.findTag('+')
+    outputTags = window.findTag('-');
+    inputTags = window.findTag('+');
 
     fuckTags: string[] = [];
 
 
-    recordList: RecordItem[] = window.recordList;
+    recordList = window.recordList;
     recordItem: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };
@@ -56,7 +55,7 @@
 
     saveRecord() {
       console.log(this.recordItem);
-      recordListModel.create(this.recordItem);
+      window.createRecord(this.recordItem)
       this.recordItem = {
         type: '-', tag: '', amount: 0, note: '',
       };

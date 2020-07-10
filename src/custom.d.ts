@@ -28,6 +28,7 @@ type TagListModel = {
 }
 
 interface Window {
+  createRecord: (record: RecordItem) => void;
   defaultTagList: string[];
   tagList: Tag[];
   recordList: RecordItem[];
