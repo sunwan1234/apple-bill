@@ -26,11 +26,12 @@
     @Prop(String) isNumberPad: string | undefined;
     @Prop({default: ''}) value: string | undefined;
 
-    @Watch('value')
+
     onValueChange(value: string) {
-      eventBus.$emit('update:note:money', value);
       if (this.isNewTag === '+') {
-        this.$emit('update:tagName', value);
+        this.$emit('update:value', value);
+      } else {
+        this.$emit('update:note:money', value);
       }
     }
 

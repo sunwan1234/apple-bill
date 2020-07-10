@@ -3,7 +3,6 @@
 		<div class="content">
 			<slot></slot>
 		</div>
-
 		<Nav></Nav>
 	</div>
 </template>

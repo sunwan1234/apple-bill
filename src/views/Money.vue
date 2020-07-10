@@ -7,7 +7,7 @@
 					:out-data-source.sync="outputTags"
 					:in-data-source.sync="inputTags"
 		></Tags>
-		<FormItem  placeholder="写点备注吧..." is-number-pad="+"></FormItem>
+		<FormItem :value="recordItem.note" @update:value="onUpdateNote" placeholder="写点备注吧..." is-number-pad="+"></FormItem>
 		<NumberPad @update:value="onUpdateAmount" @submit="saveRecord"></NumberPad>
 
 	</Layout>
@@ -87,18 +87,11 @@
 
     saveRecord() {
       recordListModel.create(this.recordItem);
+      this.recordItem = {
+        type: '-', tag: '', amount: 0, note: '',
+      };
     }
 
-
-    created() {
-      eventBus.$on('update:note:money', (note: string) => {
-        this.onUpdateNote(note);
-      });
-    }
-
-    beforeDestroy() {
-      eventBus.$off('update:note:money');
-    }
 
   }
 

@@ -8,7 +8,9 @@
 			</header>
 			<div class="input-new-label">
 				<div class="title">新建标签名称</div>
-				<FormItem isNewTag="+" placeholder="限3个汉字或5个英文字母..."
+				<FormItem isNewTag="+"
+									placeholder="限3个汉字或6个英文字母..."
+									:value="tag.name"
 									@update:tagName="onTagNameChange"
 				></FormItem>
 			</div>
