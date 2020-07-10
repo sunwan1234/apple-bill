@@ -21,7 +21,7 @@
 					<span>{{ item.name }}</span>
 				</span>
 
-					<Icon :name="'delete2'"></Icon>
+					<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
 				</li>
 			</ol>
 			<div class="button-wrapper" v-if=" isShow === '-'">
@@ -74,6 +74,15 @@
       this.inputTags = tags.filter((item) => item.type === '+');
     }
 
+    deleteTag(id) {
+      console.log(id);
+      const result = tagListModel.remove(id);
+      if(result) {
+        window.alert('删除成功')
+			} else {
+        window.alert('没有找到该标签')
+			}
+    }
 
 
   }
@@ -120,7 +129,7 @@
 
 	.button-wrapper {
 		text-align: center;
-		margin-top:10px;
+		margin-top: 10px;
 	}
 
 </style>

@@ -17,6 +17,7 @@ type TagListModel = {
   newDataId: number;
   newTagList: string[];
   getNewTagList: () => string[];
+  remove: (id: string) => boolean;
 }
 const tagListModel: TagListModel = {
   defaultData: [
@@ -40,8 +41,8 @@ const tagListModel: TagListModel = {
   data: [],
   n: 0,
   newTag: 1,
-  newTagList:[
-    'new-1', 'new-2', 'new-3', 'new-4', 'new-5', 'new-6', 'new-7', 'new-8','new-9',
+  newTagList: [
+    'new-1', 'new-2', 'new-3', 'new-4', 'new-5', 'new-6', 'new-7', 'new-8', 'new-9',
     'new-10', 'new-11', 'new-12', 'new-13', 'new-14', 'new-15'
   ],
   newDataId: 17,
@@ -63,18 +64,32 @@ const tagListModel: TagListModel = {
   create(newTag: Tag) {
     const names = this.data.map(item => item.name);
     if (names.indexOf(newTag.name) >= 0) {return 'duplicated';}
-    this.data.push({'id': this.newDataId.toString(),'svg': newTag.svg, 'name': newTag.name, 'type': newTag.type});
-    this.newDataId += 1
+    this.data.push({'id': this.newDataId.toString(), 'svg': newTag.svg, 'name': newTag.name, 'type': newTag.type});
+    this.newDataId += 1;
     console.log(this.data[this.data.length - 1]);
     this.save();
     return 'success';
   },
-  getNewTagList(){
-    return this.newTagList
+  getNewTagList() {
+    return this.newTagList;
+  },
+  remove(id: string) {
+    let index = -1;
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    if (index === -1) {
+      return false; //没有找到
+    } else {
+      this.data.splice(index, 1);
+      return true;
+    }
+
+
   }
-  // remove(id: string) {
-  //
-  // }
 
 };
 
