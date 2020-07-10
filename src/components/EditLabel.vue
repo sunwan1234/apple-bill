@@ -37,7 +37,7 @@
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
-  import store from '@/store/index2';
+
 
   @Component({
     components: {Button, FormItem, Tags, Types},
@@ -66,9 +66,9 @@
     }
 
     saveTag() {
-      const message = store.createTag(this.tag)
-      if (message === 'success') {
-        this.$router.push({path: '/labels'});
+      this.$store.commit('createTag', this.tag);
+      if (this.$store.state.createTagResult === 'success') {
+        this.$router.replace('/labels');
       }
     }
   }

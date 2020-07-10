@@ -45,7 +45,6 @@
   import {Component, Watch} from 'vue-property-decorator';
   import Types from '@/components/Money/Types.vue';
   import Button from '@/components/Button.vue';
-  import store from '@/store/index2';
 
 
   @Component({
@@ -53,9 +52,19 @@
 
   })
   export default class Labels extends Vue {
-    tags = store.tagList;
-    outputTags = store.findTag('-');
-    inputTags = store.findTag('+');
+
+    beforeCreate() {
+      this.$store.commit('fetchTags');
+
+    }
+    created(){
+      this.$store.commit('getInTags');
+      this.$store.commit('getOutTags');
+		}
+
+    tags = this.$store.state.tagList;
+    outputTags = this.$store.state.outTags;
+    inputTags = this.$store.state.inTags;
 
 
     record: RecordItem = {
@@ -68,6 +77,7 @@
       this.isShow = value;
     }
 
+
     @Watch('tags', {immediate: true})
     onTagChange(tags) {
       this.outputTags = tags.filter((item) => item.type === '-');
@@ -75,9 +85,9 @@
     }
 
 
-    deleteTag(id) {
+    deleteTag(id: string) {
       console.log(id);
-      store.removeTag(id);
+      this.$store.commit('removeTag', id);
 
     }
 
