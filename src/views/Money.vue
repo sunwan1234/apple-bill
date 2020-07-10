@@ -1,7 +1,7 @@
 <template>
 	<Layout>
 		{{this.recordItem}}
-		<Types :value.sync="recordItem.type" >
+		<Types :value.sync="recordItem.type">
 		</Types>
 		<Tags :fuckTags="fuckTags" @update:fucktags="onFuckChange"
 					:is-show="recordItem.type"
@@ -25,9 +25,6 @@
   import recordListModel from '@/models/recordListModel';
   import tagListModel from '@/models/tagListModel';
   import FormItem from '@/components/Money/FormItem.vue';
-
-  const recordList = recordListModel.fetch();
-  const tagList = tagListModel.fetch();
 
 
   @Component({
@@ -65,13 +62,14 @@
     //   {svg: 'in-other', name: '其他', type:'+'}
     // ];
 
-    outputTags = tagList.filter((item) => item.type === '-');
-    inputTags = tagList.filter((item) => item.type === '+');
+    tagList = window.tagList;
+    outputTags = this.tagList.filter((item) => item.type === '-');
+    inputTags = this.tagList.filter((item) => item.type === '+');
 
     fuckTags: string[] = [];
 
 
-    recordList: RecordItem[] = recordList;
+    recordList: RecordItem[] = window.recordList;
     recordItem: RecordItem = {
       type: '-', tag: '', amount: 0, note: '',
     };

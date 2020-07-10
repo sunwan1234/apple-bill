@@ -48,12 +48,12 @@
   import Button from '@/components/Button.vue';
 
 
-  tagListModel.fetch();
+
   @Component({
     components: {Button, Types}
   })
   export default class Labels extends Vue {
-    tags = tagListModel.data;
+    tags = window.tagList;
     outputTags = this.tags.filter((item) => item.type === '-');
     inputTags = this.tags.filter((item) => item.type === '+');
 
