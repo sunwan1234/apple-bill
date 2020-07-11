@@ -19,6 +19,7 @@
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
   import FormItem from '@/components/Money/FormItem.vue';
+  import initialRecord from '@/constants/initialRecord';
 
 
   @Component({
@@ -27,13 +28,14 @@
       recordList() {
         return this.$store.state.recordList;
       },
+      tagList() {
+        return this.$store.state.tagList;
+      }
     }
   })
   export default class Money extends Vue {
-    fuckTags: string[] = [];
-    recordItem: RecordItem = {
-      type: '-', tag: '', amount: 0, note: '',
-    };
+    fuckTags: Tag[] = [];
+    recordItem: RecordItem = initialRecord
 
     created() {
       this.$store.commit('fetchRecords');
@@ -41,11 +43,11 @@
 
     @Watch('recordItem.type')
     onTypeChange() {
-      this.recordItem.tag = '';
+      this.recordItem.tag.name = '';
       this.fuckTags = [];
     }
 
-    onFuckChange(value: string[]) {
+    onFuckChange(value: Tag[]) {
       this.fuckTags = value;
       this.recordItem.tag = value[0];
     }
@@ -70,7 +72,7 @@
 
     clearData() {
       this.recordItem = {
-        type: this.recordItem.type, tag: '', amount: 0, note: '',
+        type: this.recordItem.type, tag: {'id': '', 'svg': '', 'name': '', 'type': ''}, amount: 0, note: '',
       };
       this.fuckTags = [];
     }

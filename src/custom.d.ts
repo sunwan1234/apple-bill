@@ -1,6 +1,6 @@
 type RecordItem = {
   type: string;
-  tag: string;
+  tag: Tag;
   amount: number;
   note: string;
   createdAt?: Date;

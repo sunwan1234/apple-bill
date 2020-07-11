@@ -1,0 +1,1 @@
+export default Object.freeze( {'id': '', 'svg': '', 'name': '', 'type': ''});

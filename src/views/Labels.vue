@@ -45,6 +45,7 @@
   import {Component, Watch} from 'vue-property-decorator';
   import Types from '@/components/Money/Types.vue';
   import Button from '@/components/Button.vue';
+  import initialRecord from '@/constants/initialRecord';
 
 
   @Component({
@@ -57,19 +58,18 @@
       this.$store.commit('fetchTags');
 
     }
-    created(){
+
+    created() {
       this.$store.commit('getInTags');
       this.$store.commit('getOutTags');
-		}
+    }
 
     tags = this.$store.state.tagList;
     outputTags = this.$store.state.outTags;
     inputTags = this.$store.state.inTags;
 
 
-    record: RecordItem = {
-      type: '-', tag: '', amount: 0, note: '',
-    };
+    record: RecordItem = initialRecord;
     isShow!: string;
 
     @Watch('record.type', {immediate: true})

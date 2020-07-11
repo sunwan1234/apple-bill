@@ -37,18 +37,16 @@
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
+  import initialRecord from '@/constants/initialRecord';
+  import initialTag from '@/constants/initialTag';
 
 
   @Component({
     components: {Button, FormItem, Tags, Types},
   })
   export default class EditLabel extends Vue {
-    record: RecordItem = {
-      type: '-', tag: '', amount: 0, note: '',
-    };
-    tag: Tag = {
-      type: '-', name: '', svg: '', id: '',
-    };
+    record: RecordItem = initialRecord;
+    tag: Tag = initialTag;
     selectedTags: string[] = [];
 
 

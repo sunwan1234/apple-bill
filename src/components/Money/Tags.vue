@@ -3,8 +3,8 @@
 		<div class="current out" v-if="!isNewTag && isShow === '-'">
 			<div class="div-wrapper">
 				<div v-for="(item, index) in this.outDataSource"
-						 :class="{selected: fuckTags.indexOf(item.name) >= 0}"
-						 :key="index" @click="toggle(item.name)">
+						 :class="{selected: fuckTags.indexOf(item) >= 0}"
+						 :key="index" @click="toggle(item)">
 					<Icon :name="item.svg"></Icon>
 					{{ item.name }}
 				</div>
@@ -25,7 +25,7 @@
 			<div class="div-wrapper">
 				<div v-for="(item, index) in this.inDataSource"
 						 :class="{selected: fuckTags.indexOf(item.name) >= 0}"
-						 :key="index" @click="toggle(item.name)">
+						 :key="index" @click="toggle(item)">
 					<Icon :name="item.svg"></Icon>
 					{{ item.name }}
 				</div>
@@ -61,7 +61,7 @@
   export default class Tags extends Vue {
     @Prop(String) isShow: string | undefined;
     @Prop(String) isNewTag: string | undefined;
-    @Prop(Array) fuckTags: string[] | undefined;
+    @Prop(Array) fuckTags: Tag[] | undefined;
 
     get tags() {
       return this.$store.state.tagList;
@@ -88,12 +88,8 @@
       return this.$store.state.defaultTagList;
     }
 
-    // outDataSource = store.findTag('-');
-    // inDataSource = store.findTag('+');
-    // newDataSource = store.getNewTagList()
 
-
-    toggle(tag: string) {
+    toggle(tag: Tag) {
       // 每次只能选中一个
       if (this.fuckTags) {
         if (this.fuckTags.length === 0) {
@@ -164,7 +160,7 @@
 	.tags .current {
 		display: flex;
 		flex-wrap: wrap;
-		margin-top: 2px;
+		margin-top: 10px;
 		font-size: 12px;
 		max-width: 350px;
 		margin-left: auto;
