@@ -46,6 +46,7 @@
   import Types from '@/components/Money/Types.vue';
   import Button from '@/components/Button.vue';
   import initialRecord from '@/constants/initialRecord';
+  import clone from '@/lib/clone';
 
 
   @Component({
@@ -69,7 +70,7 @@
     inputTags = this.$store.state.inTags;
 
 
-    record: RecordItem = initialRecord;
+    record: RecordItem = clone(initialRecord);
     isShow!: string;
 
     @Watch('record.type', {immediate: true})

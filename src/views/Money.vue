@@ -20,6 +20,7 @@
   import Types from '@/components/Money/Types.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import initialRecord from '@/constants/initialRecord';
+  import clone from '@/lib/clone';
 
 
   @Component({
@@ -35,7 +36,7 @@
   })
   export default class Money extends Vue {
     fuckTags: Tag[] = [];
-    recordItem: RecordItem = initialRecord
+    recordItem: RecordItem = clone(initialRecord)
 
     created() {
       this.$store.commit('fetchRecords');

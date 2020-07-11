@@ -39,14 +39,15 @@
   import Button from '@/components/Button.vue';
   import initialRecord from '@/constants/initialRecord';
   import initialTag from '@/constants/initialTag';
+  import clone from '@/lib/clone';
 
 
   @Component({
     components: {Button, FormItem, Tags, Types},
   })
   export default class EditLabel extends Vue {
-    record: RecordItem = initialRecord;
-    tag: Tag = initialTag;
+    record: RecordItem = clone(initialRecord)
+    tag: Tag = clone(initialTag);
     selectedTags: string[] = [];
 
 
