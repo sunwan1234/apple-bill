@@ -20,7 +20,7 @@
 
 						</span>
 
-						<span>￥{{item.amount}} </span>
+						<span>￥{{convertToLikelyFloat(item.amount)}} </span>
 					</li>
 				</ol>
 				<div class="total-wrapper">
@@ -76,6 +76,19 @@
       return day.format('HH:mm');
     }
 
+    getTotal(itemArray: RecordItem[]) {
+      const intResultOfTotal = itemArray.reduce((sum, item) => {
+        return sum + parseInt(item.amount);
+      }, 0);
+      return this.convertToLikelyFloat(intResultOfTotal.toString());
+    }
+
+    convertToLikelyFloat(value: string) {
+      const arr = value.split('')
+			arr.splice(-2, 0, '.');
+      return arr.join('');
+		}
+
     get groupedList() {
       const copyRecordList = clone(this.recordList)
         .filter(record => record.type === this.type)
@@ -85,7 +98,7 @@
         return [] as Result[];
       }
 
-      type Result = { title: string; total?: number; items: RecordItem[] }[]
+      type Result = { title: string; total?: string; items: RecordItem[] }[]
       const result: Result = [{
         title: dayjs(copyRecordList[0].createdAt).format(),
         items: [copyRecordList[0]]
@@ -102,11 +115,7 @@
       }
 
       result.map(group => {
-        group.total = group.items.reduce((sum, item) => {
-          console.log(sum);
-          console.log(item);
-          return sum + item.amount;
-        }, 0);
+        group.total = this.getTotal(group.items);
       });
 
 
@@ -122,9 +131,11 @@
 			background: #fed058;
 		}
 	}
-.everyday-li-wrapper {
-	margin-top: 10px;
-}
+
+	.everyday-li-wrapper {
+		margin-top: 10px;
+	}
+
 	.everyday-li {
 		margin-left: 10px;
 		margin-right: 10px;
@@ -140,7 +151,7 @@
 			align-items: center;
 
 			&:last-child {
-				border-bottom:  1px solid #e6e6e6;
+				border-bottom: 1px solid #e6e6e6;
 				padding-bottom: 10px;
 			}
 
@@ -170,6 +181,7 @@
 					font-weight: bold;
 					font-size: 16px;
 				}
+
 				& > .time-and-notes {
 					font-size: 14px;
 					color: gray;

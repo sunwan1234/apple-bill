@@ -1,7 +1,7 @@
 type RecordItem = {
   type: string;
   tag: Tag;
-  amount: number;
+  amount: string;
   note: string;
   createdAt?: string;
 }

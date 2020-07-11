@@ -48,7 +48,7 @@
     }
 
     onUpdateAmount(value: string) {
-      this.recordItem.amount = parseFloat(value);
+      this.recordItem.amount = value;
     }
 
     onUpdateNote(value: string) {
@@ -67,7 +67,7 @@
 
     clearData() {
       this.recordItem = {
-        type: this.recordItem.type, tag: {'id': '', 'svg': '', 'name': '', 'type': ''}, amount: 0, note: '',
+        type: this.recordItem.type, tag: {'id': '', 'svg': '', 'name': '', 'type': ''}, amount: '0.00', note: '',
       };
       this.fuckTags = [];
     }

@@ -28,44 +28,43 @@ const newTagList = [
 ];
 let newDataId = 17;
 const defaultRecords = [
-
   {
-    amount: 328,
+    amount: '32800',
     createdAt: '2020-07-08T09:34:10.201Z',
     note: '买口红',
     tag: {id: '2', svg: 'shop', name: '购物', type: '-'},
     type: '-'
   },
   {
-    amount: 1000,
+    amount: '100000',
     createdAt: '2020-07-10T10:42:35.952Z',
     note: '别人送的红包',
     tag: {id: '11', svg: 'in-gift', name: '礼金', type: '+'},
     type: '+'
   },
   {
-    amount: 35.7,
+    amount: '3570',
     createdAt: '2020-07-11T09:35:11.432Z',
     note: '坐滴滴',
     tag: {id: '4', svg: 'transport', name: '交通', type: '-'},
     type: '-',
   },
   {
-    amount: 147.2,
+    amount: '14720',
     createdAt: '2020-07-11T09:35:28.235Z',
     note: '给汪汪买粮',
     tag: {id: '8', svg: 'pet', name: '宠物', type: '-'},
     type: '-',
   },
   {
-    amount: 1000,
+    amount: '100000',
     createdAt: '2020-07-11T09:35:39.708Z',
     note: '中新股',
     tag: {id: '13', svg: 'in-manage', name: '股票', type: '+'},
     type: '+',
   },
   {
-    amount: 256,
+    amount: '25600',
     createdAt: '2020-07-09T12:24:07.868Z',
     note: '基金定投挣钱了',
     tag: {id: '14', svg: 'in-manage2', name: '基金', type: '+'},

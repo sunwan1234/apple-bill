@@ -46,17 +46,17 @@
         }
         return;
       }
-      const indexOfPoint = this.output.indexOf('.')
+      const indexOfPoint = this.output.indexOf('.');
 
       if (indexOfPoint >= 0 && input === '.') {
         return;
       }
-      console.log(indexOfPoint)
-      if(indexOfPoint >= 0) {
+      console.log(indexOfPoint);
+      if (indexOfPoint >= 0) {
         if (this.output.slice(indexOfPoint).length >= 3) {
           return;
-				}
-			}
+        }
+      }
 
       this.output += input;
 
@@ -75,6 +75,22 @@
     }
 
     ok() {
+      const output = this.output;
+      const indexOfPoint = this.output.indexOf('.');
+      if (indexOfPoint >= 0) {
+        const numberAfterPoint = this.output.slice(indexOfPoint).length;
+        while (numberAfterPoint < 3) {
+          this.output += '0';
+        }
+        const arr = output.split('.');
+        arr.splice(output.indexOf('.'), 1);
+        this.output = arr.join('');
+
+      } else {
+        this.output += '00'
+			}
+			console.log('final====')
+      console.log(this.output)
       this.$emit('update:value', this.output);
       this.$emit('submit', this.output);
       this.output = '0';
@@ -95,48 +111,47 @@
 		flex-shrink: 1;
 
 
-
-	.output {
-		@extend %clearFix;
-		font-size: 28px;
-		font-family: Consolas, monospace;
-		text-align: right;
-		border: 1px solid #333;
-		border-radius: 10px;
-		background: white;
-		padding: 0;
-		padding-right: 5px;
-		margin: 0 3px;
-		flex-shrink: 2;
-		min-height: 0;
-	}
-
-	.buttons {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-around;
-		flex-grow: 1;
-		padding: 2px;
-		margin: 1px 3px;
-		flex-shrink: 2;
-		min-height: 0;
-
-
-		> button {
-			width: 21%;
+		.output {
+			@extend %clearFix;
+			font-size: 28px;
+			font-family: Consolas, monospace;
+			text-align: right;
 			border: 1px solid #333;
 			border-radius: 10px;
 			background: white;
-			flex-grow: 1;
-			padding: 2px;
-			/*padding: 10px;*/
-			margin: 3px;
-			font-size: 16px;
-			flex-shrink: 1;
+			padding: 0;
+			padding-right: 5px;
+			margin: 0 3px;
+			flex-shrink: 2;
 			min-height: 0;
 		}
+
+		.buttons {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			flex-grow: 1;
+			padding: 2px;
+			margin: 1px 3px;
+			flex-shrink: 2;
+			min-height: 0;
+
+
+			> button {
+				width: 21%;
+				border: 1px solid #333;
+				border-radius: 10px;
+				background: white;
+				flex-grow: 1;
+				padding: 2px;
+				/*padding: 10px;*/
+				margin: 3px;
+				font-size: 16px;
+				flex-shrink: 1;
+				min-height: 0;
+			}
+		}
 	}
-}
 
 
 </style>
