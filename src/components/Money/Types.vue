@@ -1,10 +1,12 @@
 <template>
 	<div>
 		<ol :class=" IsNewTag === '1' ? 'types new-tag' : 'types' ">
-			<li :class=" value === '-' && 'selected'  "  @click="selectType('-')">
+			<li :class="liClass('-')"
+					@click="selectType('-')">
 				<span>支出</span>
 			</li>
-			<li :class=" value === '+' && 'selected' " @click="selectType('+')">
+			<li :class="liClass('+')"
+					@click="selectType('+')">
 				<span>收入</span>
 			</li>
 		</ol>
@@ -15,22 +17,30 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop, Watch} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
   import Tags from '@/components/Money/Tags.vue';
 
   @Component({
     components: {Tags}
   })
   export default class Types extends Vue {
-    @Prop(String) readonly value!: string
-		@Prop(String) readonly 'IsNewTag'
+    @Prop(String) readonly value!: string;
+    @Prop(String) readonly 'IsNewTag';
+    @Prop(String) classPrefix?: string;
 
     selectType(type: string) { // type只能是'-' 或者 '+'
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown');
       }
       this.$emit('update:value', type);
-      this.$emit('update:selectedTag', '')
+      this.$emit('update:selectedTag', '');
+    }
+
+    liClass(type: string) {
+      return {
+        [this.classPrefix + '-item']: this.classPrefix,
+        selected: this.value === type
+      };
     }
 
 
@@ -58,7 +68,7 @@
 	.types > li.selected {
 		border-bottom: 1px solid #333333;
 	}
-	
+
 	.new-tag {
 		background-color: #fff;
 	}
