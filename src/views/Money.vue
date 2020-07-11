@@ -1,6 +1,5 @@
 <template>
 	<Layout>
-		{{this.recordItem}}
 		<Types :value.sync="recordItem.type">
 		</Types>
 		<Tags :fuckTags="fuckTags" @update:fucktags="onFuckChange"
@@ -14,7 +13,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Watch} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';

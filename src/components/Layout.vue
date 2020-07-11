@@ -1,5 +1,5 @@
 <template>
-	<div class="nav-wrapper">
+	<div class="layout-wrapper" :style="{height: scrollerHeight}">
 		<div class="content">
 			<slot></slot>
 		</div>
@@ -8,13 +8,25 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Layout'
-  };
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+  @Component
+  export  default class App extends Vue {
+    get scrollerHeight(){
+      return document.documentElement.clientHeight + 'px'
+    }
+
+    mounted() {
+      // window.onresize监听页面高度的变化
+      window.onresize = function()  {
+        console.log(document.querySelector('#app')?.clientHeight)
+      }
+    }
+  }
 </script>
 
 <style scoped lang="scss">
-	.nav-wrapper {
+	.layout-wrapper {
 		display: flex;
 		flex-direction: column;
 		height: 100vh;

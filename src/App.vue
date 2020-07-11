@@ -1,13 +1,19 @@
 <template>
-	<div id="app">
+	<div id="app" >
 		<router-view></router-view>
 
 	</div>
 </template>
 
+
+
 <style lang="scss">
 	@import "~@/assets/styles/reset.scss";
 	@import "~@/assets/styles/helper.scss";
+
+	#app {
+		min-height: 580px;
+	}
 
 	body {
 		font-family: $font-hei;

@@ -1,5 +1,6 @@
 <template>
 	<Layout>
+		{{this.recordList}}
 		<Types class-prefix="type" :value.sync="type"></Types>
 		<ol class="everyday-li-wrapper">
 			<li class="everyday-li" v-for="(group, index) in groupedList" :key="index">
