@@ -46,10 +46,17 @@
         }
         return;
       }
+      const indexOfPoint = this.output.indexOf('.')
 
-      if (this.output.indexOf('.') >= 0 && input === '.') {
+      if (indexOfPoint >= 0 && input === '.') {
         return;
       }
+      console.log(indexOfPoint)
+      if(indexOfPoint >= 0) {
+        if (this.output.slice(indexOfPoint).length >= 3) {
+          return;
+				}
+			}
 
       this.output += input;
 

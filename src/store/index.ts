@@ -89,7 +89,6 @@ const store = new Vuex.Store({
   mutations: {
     fetchRecords(state) {
       const records = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
-      window.alert(records.length)
       if (records.length === 0) {
         store.commit('saveDefaultRecords')
       }
