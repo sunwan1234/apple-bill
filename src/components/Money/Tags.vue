@@ -24,7 +24,7 @@
 		<div class="current in" v-if="!isNewTag && isShow === '+'">
 			<div class="div-wrapper">
 				<div v-for="(item, index) in this.inDataSource"
-						 :class="{selected: fuckTags.indexOf(item.name) >= 0}"
+						 :class="{selected: fuckTags.indexOf(item) >= 0}"
 						 :key="index" @click="toggle(item)">
 					<Icon :name="item.svg"></Icon>
 					{{ item.name }}

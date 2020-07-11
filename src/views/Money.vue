@@ -42,11 +42,6 @@
       this.$store.commit('fetchRecords');
     }
 
-    @Watch('recordItem.type')
-    onTypeChange() {
-      this.recordItem.tag.name = '';
-      this.fuckTags = [];
-    }
 
     onFuckChange(value: Tag[]) {
       this.fuckTags = value;
