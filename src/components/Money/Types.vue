@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<ol :class=" IsNewTag === '1' ? 'types new-tag' : 'types' ">
+		<ol :class=" IsNewTag === '1' ? `types new-tag ${this.classPrefix}` :
+		 `types ${this.classPrefix}` ">
 			<li :class="liClass('-')"
 					@click="selectType('-')">
 				<span>支出</span>

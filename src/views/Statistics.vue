@@ -1,6 +1,23 @@
 <template>
 	<Layout>
-		<Types class-prefix="type" :value.sync="type"></Types>
+		<div class="title">
+			<span>消费总结</span>
+		</div>
+		<div class="progress-lists">
+			<div class="final-title-number">
+				<span class="final-title">累计结余</span>
+				<span class="final-number">￥{{minusTotalData}}</span>
+
+			</div>
+			<div class="out" v-for="(item, index) in totalData" :key="item.name">
+				<span>共{{item.name}}</span>
+				<Progress :class="'progress-' + index"
+									:bar-width="Math.round(item.value / totalDataSum *100).toString()"></Progress>
+				<span>￥{{item.origin}}</span>
+			</div>
+		</div>
+
+		<Types class-prefix="type-statistics" :value.sync="type"></Types>
 		<ol class="everyday-li-wrapper">
 			<li class="everyday-li" v-for="(group, index) in groupedList" :key="index">
 				<span class="title">{{beautify(group.title)}}</span>
@@ -37,13 +54,15 @@
   import Types from '@/components/Money/Types.vue';
   import clone from '@/lib/clone';
   import dayjs from 'dayjs';
+  import Progress from '@/components/Progress.vue';
 
 
   @Component({
-    components: {Types}
+    components: {Progress, Types}
   })
   export default class Statistics extends Vue {
     type = '-';
+
 
     get recordList() {
       return this.$store.state.recordList;
@@ -83,10 +102,12 @@
     }
 
     convertToLikelyFloat(value: string) {
-      const arr = value.split('')
-			arr.splice(-2, 0, '.');
-      return arr.join('');
-		}
+      if (value) {
+        const arr = value.split('');
+        arr.splice(-2, 0, '.');
+        return arr.join('');
+      }
+    }
 
     get groupedList() {
       const copyRecordList = clone(this.recordList)
@@ -120,19 +141,93 @@
 
       return result;
     }
+
+    get totalAmount() {
+      const copyRecordList = clone(this.recordList);
+      const allOutRecords = copyRecordList.filter(item => item.type === '-');
+      const allInRecords = copyRecordList.filter(item => item.type === '+');
+
+      const outAmount = allOutRecords.reduce((sum, item) => {
+        return sum + parseInt(item.amount);
+      }, 0);
+
+      const inAmount = allInRecords.reduce((sum, item) => {
+        return sum + parseInt(item.amount);
+      }, 0);
+
+      const resultOut = this.convertToLikelyFloat(outAmount.toString());
+      const resultIn = this.convertToLikelyFloat(inAmount.toString());
+
+      return [resultOut, resultIn];
+    }
+
+    get totalData() {
+      return [
+        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0]},
+        {value: parseFloat(this.totalAmount[1]!), name: '收入', origin: this.totalAmount[1]},
+      ];
+    }
+
+    get totalDataSum() {
+      return this.totalData[0].value + this.totalData[1].value;
+    }
+
+    get minusTotalData() {
+      const inNumber = this.totalData[1].origin;
+      const outNumber = this.totalData[0].origin;
+      let finalResult = '' ;
+      if (inNumber && outNumber) {
+        const inNumberString = inNumber.toString();
+        const outNumberString = outNumber.toString();
+        const arr1 = inNumberString.split('');
+        const arr2 = outNumberString.split('');
+        arr1.splice(arr1.indexOf('.'), 1);
+        arr2.splice(arr2.indexOf('.'), 1);
+        const arr1Combined = arr1.join('');
+        const arr2Combined = arr2.join('');
+        if (arr1Combined && arr2Combined) {
+          const result = parseInt(arr1Combined) - parseInt(arr2Combined);
+          finalResult = this.convertToLikelyFloat(result.toString())!;
+
+        }
+      }
+
+      return finalResult;
+    }
   }
 </script>
 
 <style scoped lang="scss">
-	::v-deep .type-item {
+	.title {
+		margin: 10px;
+
+		> span {
+			font-size: 18px;
+			border-bottom: 2px solid #fed058;
+		}
+	}
+
+	::v-deep .type-statistics {
+		background: #fff;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	::v-deep .type-statistics li.type-statistics-item {
+		font-size: 16px;
+		margin-right: 10px;
+		background: #fff;
+		width: 45px;
 
 		&.selected {
-			background: #fed058;
+			border: none;
+			color: #fd9b09;
 		}
 	}
 
 	.everyday-li-wrapper {
 		margin-top: 10px;
+		margin-bottom: 20px;
 	}
 
 	.everyday-li {
@@ -148,6 +243,7 @@
 			justify-content: space-between;
 			margin: 10px 0;
 			align-items: center;
+			padding-left: 10px;
 
 			&:last-child {
 				border-bottom: 1px solid #e6e6e6;
@@ -198,5 +294,42 @@
 			text-align: right;
 		}
 
+	}
+
+	.progress-lists {
+		display: flex;
+		flex-direction: column;
+		margin: 10px;
+		border: 1px solid #333;
+		border-radius: 18px;
+		padding: 20px 30px;
+
+		& > .out {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			& > span {
+				margin-right: 10px;
+				font-size: 12px;
+				color: gray;
+				width: 40px;
+			}
+		}
+	}
+
+	.final-title-number {
+		display: flex;
+		justify-content: space-between;
+
+		> .final-title {
+			font-weight: bold;
+			font-size: 16px;
+		}
+
+		> .final-number {
+			font-size: 20px;
+			color: rgb(244, 100, 123);;
+		}
 	}
 </style>
