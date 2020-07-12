@@ -1,9 +1,9 @@
 type RecordItem = {
   type: string;
-  tag: string;
-  amount: number;
+  tag: Tag;
+  amount: string;
   note: string;
-  createdAt?: Date;
+  createdAt?: string;
 }
 
 type Tag = {
@@ -28,10 +28,14 @@ type TagListModel = {
 }
 
 interface Window {
-  defaultTagList: string[];
-  tagList: Tag[];
-  recordList: RecordItem[];
-  createTag: (tag: Tag) => 'success' | 'duplicated'; // 联合类型
-  removeTag: (id: string) => boolean;
-  findTag: (type: string) => Tag[];
+  store: {
+    createRecord: (record: RecordItem) => void;
+    defaultTagList: string[];
+    tagList: Tag[];
+    recordList: RecordItem[];
+    createTag: (tag: Tag) => 'success' | 'duplicated'; // 联合类型
+    removeTag: (id: string) => boolean;
+    findTag: (type: string) => Tag[];
+  };
+
 }

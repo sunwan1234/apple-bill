@@ -1,5 +1,5 @@
 <template>
-	<div class="nav-wrapper">
+	<div class="layout-wrapper" :style="{height: scrollerHeight}">
 		<div class="content">
 			<slot></slot>
 		</div>
@@ -8,16 +8,26 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Layout'
-  };
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+  @Component
+  export  default class App extends Vue {
+    get scrollerHeight(){
+      return document.documentElement.clientHeight + 'px'
+    }
+
+  }
 </script>
 
 <style scoped lang="scss">
-	.nav-wrapper {
+	.layout-wrapper {
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
+	}
+
+	.layout-wrapper::-webkit-scrollbar {
+		display: none;
 	}
 
 	.content {

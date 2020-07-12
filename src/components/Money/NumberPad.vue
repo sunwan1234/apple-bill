@@ -46,9 +46,16 @@
         }
         return;
       }
+      const indexOfPoint = this.output.indexOf('.');
 
-      if (this.output.indexOf('.') >= 0 && input === '.') {
+      if (indexOfPoint >= 0 && input === '.') {
         return;
+      }
+
+      if (indexOfPoint >= 0) {
+        if (this.output.slice(indexOfPoint).length >= 3) {
+          return;
+        }
       }
 
       this.output += input;
@@ -68,8 +75,26 @@
     }
 
     ok() {
-      this.$emit('update:value', this.output);
-      this.$emit('submit', this.output);
+
+      let output = this.output;
+
+      const indexOfPoint = output.indexOf('.');
+
+      if (indexOfPoint >= 0) {
+
+        while (output.slice(indexOfPoint).length < 3) {
+          output += '0';
+        }
+        const arr = output.split('.');
+        arr.splice(output.indexOf('.'), 1);
+        output = arr.join('');
+
+      } else {
+        output += '00'
+			}
+
+      this.$emit('update:value', output.toString());
+      this.$emit('submit', output.toString());
       this.output = '0';
     }
 
@@ -88,48 +113,47 @@
 		flex-shrink: 1;
 
 
-
-	.output {
-		@extend %clearFix;
-		font-size: 28px;
-		font-family: Consolas, monospace;
-		text-align: right;
-		border: 1px solid #333;
-		border-radius: 10px;
-		background: white;
-		padding: 0;
-		padding-right: 5px;
-		margin: 0 3px;
-		flex-shrink: 2;
-		min-height: 0;
-	}
-
-	.buttons {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-around;
-		flex-grow: 1;
-		padding: 2px;
-		margin: 1px 3px;
-		flex-shrink: 2;
-		min-height: 0;
-
-
-		> button {
-			width: 21%;
+		.output {
+			@extend %clearFix;
+			font-size: 28px;
+			font-family: Consolas, monospace;
+			text-align: right;
 			border: 1px solid #333;
 			border-radius: 10px;
 			background: white;
-			flex-grow: 1;
-			padding: 2px;
-			/*padding: 10px;*/
-			margin: 3px;
-			font-size: 16px;
-			flex-shrink: 1;
+			padding: 0;
+			padding-right: 5px;
+			margin: 0 3px;
+			flex-shrink: 2;
 			min-height: 0;
 		}
+
+		.buttons {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			flex-grow: 1;
+			padding: 2px;
+			margin: 1px 3px;
+			flex-shrink: 2;
+			min-height: 0;
+
+
+			> button {
+				width: 21%;
+				border: 1px solid #333;
+				border-radius: 10px;
+				background: white;
+				flex-grow: 1;
+				padding: 2px;
+				/*padding: 10px;*/
+				margin: 3px;
+				font-size: 16px;
+				flex-shrink: 1;
+				min-height: 0;
+			}
+		}
 	}
-}
 
 
 </style>

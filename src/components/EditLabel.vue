@@ -1,6 +1,5 @@
 <template>
 	<layout>
-		{{this.tag}}
 		<div class="edit-label-wrapper">
 			<header>
 				<span>设定自定义标签</span>
@@ -9,14 +8,14 @@
 			<div class="input-new-label">
 				<div class="title">新建标签名称</div>
 				<FormItem isNewTag="+"
-									placeholder="限3个汉字或6个英文字母..."
+									placeholder="限3个汉字..."
 									:value="tag.name"
 									@update:tagName="onTagNameChange"
 				></FormItem>
 			</div>
 			<div class="svgs">
 				<div class="svg-title">选择图标</div>
-				<Tags is-new-tag="+" :new-data-source="this.newTagList"
+				<Tags is-new-tag="+"
 							@update:new:tag="onSelectedTagChange"
 							:fuck-tags="selectedTags"
 				></Tags>
@@ -37,20 +36,17 @@
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
+  import initialRecord from '@/constants/initialRecord';
+  import initialTag from '@/constants/initialTag';
+  import clone from '@/lib/clone';
+
 
   @Component({
-    components: {Button, FormItem, Tags, Types}
+    components: {Button, FormItem, Tags, Types},
   })
   export default class EditLabel extends Vue {
-    record: RecordItem = {
-      type: '-', tag: '', amount: 0, note: '',
-    };
-    newTagList = window.defaultTagList
-
-    tag: Tag = {
-      type: '-', name: '', svg: '', id: '',
-    };
-
+    record: RecordItem = clone(initialRecord)
+    tag: Tag = clone(initialTag);
     selectedTags: string[] = [];
 
 
@@ -68,9 +64,9 @@
     }
 
     saveTag() {
-      const message = window.createTag(this.tag)
-      if (message === 'success') {
-        this.$router.push({path: '/labels'});
+      this.$store.commit('createTag', this.tag);
+      if (this.$store.state.createTagResult === 'success') {
+        this.$router.replace('/labels');
       }
     }
   }

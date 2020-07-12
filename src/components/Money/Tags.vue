@@ -1,38 +1,44 @@
 <template>
 	<div class="tags">
-		<ul class="current out" v-if="!isNewTag && isShow === '-'">
-			<li v-for="(item, index) in this.outDataSource"
-					:class="{selected: fuckTags.indexOf(item.name) >= 0}"
-					:key="index" @click="toggle(item.name)">
-				<Icon :name="item.svg"></Icon>
-				{{ item.name }}
-			</li>
+		<div class="current out" v-if="!isNewTag && isShow === '-'">
+			<div class="div-wrapper">
+				<div v-for="(item, index) in this.outDataSource"
+						 :class="{selected: fuckTags.indexOf(item) >= 0}"
+						 :key="index" @click="toggle(item)">
+					<Icon :name="item.svg"></Icon>
+					{{ item.name }}
+				</div>
 
-			<li class="new">
-				<router-link to="/labels/edit">
-					<button>
-						<Icon name="plus"></Icon>
-						新增
-					</button>
-				</router-link>
-			</li>
-		</ul>
-		<ul class="current in" v-if="!isNewTag && isShow === '+'">
-			<li v-for="(item, index) in this.inDataSource"
-					:class="{selected: fuckTags.indexOf(item.name) >= 0}"
-					:key="index" @click="toggle(item.name)">
-				<Icon :name="item.svg"></Icon>
-				{{ item.name }}
-			</li>
-			<li class="new">
-				<router-link to="/labels/edit">
-					<button>
-						<Icon name="plus"></Icon>
-						新增
-					</button>
-				</router-link>
-			</li>
-		</ul>
+				<div class="new">
+					<router-link to="/labels/edit">
+						<button>
+							<Icon name="plus"></Icon>
+							新增
+						</button>
+					</router-link>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="current in" v-if="!isNewTag && isShow === '+'">
+			<div class="div-wrapper">
+				<div v-for="(item, index) in this.inDataSource"
+						 :class="{selected: fuckTags.indexOf(item) >= 0}"
+						 :key="index" @click="toggle(item)">
+					<Icon :name="item.svg"></Icon>
+					{{ item.name }}
+				</div>
+				<div class="new">
+					<router-link to="/labels/edit">
+						<button>
+							<Icon name="plus"></Icon>
+							新增
+						</button>
+					</router-link>
+				</div>
+			</div>
+		</div>
 
 		<div class="tag-list" v-if="isNewTag === '+'">
 			<div class="tag-wrapper">
@@ -49,23 +55,43 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop, PropSync, Watch} from 'vue-property-decorator';
-
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class Tags extends Vue {
     @Prop(String) isShow: string | undefined;
-    @Prop(Array) outDataSource: Array<Record<string, string>> | undefined;
-    @Prop(Array) inDataSource: Array<Record<string, string>> | undefined;
     @Prop(String) isNewTag: string | undefined;
-    @Prop(Array) newDataSource: string[] | undefined;
+    @Prop(Array) fuckTags: Tag[] | undefined;
 
-    @Prop(Array) fuckTags: string[] | undefined;
+    get tags() {
+      return this.$store.state.tagList;
+    }
+
+    beforeCreate() {
+      this.$store.commit('fetchTags');
+
+    }
+
+    created() {
+      this.$store.commit('getNewTagList');
+    }
+
+    get outDataSource() {
+      return this.$store.state.tagList.filter(item => item.type === '-');
+    }
+
+    get inDataSource() {
+      return this.$store.state.tagList.filter(item => item.type === '+');
+    }
+
+    get newDataSource() {
+      return this.$store.state.defaultTagList;
+    }
 
 
-    toggle(tag: string) {
+    toggle(tag: Tag) {
       // 每次只能选中一个
-			if(this.fuckTags) {
+      if (this.fuckTags) {
         if (this.fuckTags.length === 0) {
           this.fuckTags.push(tag);
         } else {
@@ -76,31 +102,12 @@
         if (this.isNewTag === '+') {
           this.$emit('update:new:tag', this.fuckTags);
         } else {
-          console.log('0000')
           this.$emit('update:fucktags', this.fuckTags);
         }
-			}
+      }
     }
 
-
-      // toggle(tag: string) {
-      //   // 每次只能选中一个
-      //   if (this.selectedTags.length === 0) {
-      //     this.selectedTags.push(tag);
-      //   } else {
-      //     this.selectedTags.pop();
-      //     this.selectedTags.push(tag);
-      //   }
-      //
-      //   if (this.isNewTag === '+') {
-      //     this.$emit('update:new:tag', this.selectedTags[0]);
-      //   } else {
-      //     this.$emit('update:value', this.selectedTags[0]);
-      //   }
-      // }
-
-
-    }
+  }
 </script>
 
 <style scoped lang="scss">
@@ -108,6 +115,11 @@
 		// iphone se
 		.tags {
 			max-height: 29vh;
+		}
+		.tags .current > div.div-wrapper {
+
+			justify-content: center;
+
 		}
 
 	}
@@ -135,6 +147,9 @@
 		}
 	}
 
+	.tags::-webkit-scrollbar {
+		display: none;
+	}
 
 	.tags {
 		flex-shrink: 1;
@@ -145,30 +160,37 @@
 	.tags .current {
 		display: flex;
 		flex-wrap: wrap;
-		padding: 10px;
-		justify-content: space-between;
-		margin-right: -10px;
+		margin-top: 10px;
 		font-size: 12px;
+		max-width: 350px;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
-	.tags .current > li {
+	.tags .current > div {
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: -10px;
+	}
+
+	.tags .current > div > div {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		width: 67px;
+		width: 68px;
 		border: 2px solid #333;
 		border-radius: 50%;
-		margin-right: 10px;
+		margin-right: 22px;
 		margin-bottom: 10px;
 		padding: 8px;
 	}
 
-	.tags .current > li.selected {
+	.tags .current > div > div.selected {
 		border: 2px solid rgb(248, 124, 148);
 	}
 
-	.tags .current > li svg {
+	.tags .current > div > div svg {
 		height: 30px;
 		width: 30px;
 	}
@@ -186,7 +208,6 @@
 	.tag-list {
 		overflow: hidden;
 		width: 345px;
-
 		margin: auto;
 		padding-top: 3px;
 
