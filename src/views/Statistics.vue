@@ -1,7 +1,7 @@
 <template>
 	<Layout>
 		<div class="title">
-			<span>消费明细</span>
+			<span>收支明细</span>
 		</div>
 		<div class="progress-lists">
 			<div class="final-title-number">
