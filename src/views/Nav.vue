@@ -9,8 +9,8 @@
 			标签
 		</router-link>
 		<router-link to="/statistics" class="item" active-class="selected">
-			<Icon name="statistics"></Icon>
-			统计
+			<Icon name="nav-3"></Icon>
+			明细
 		</router-link>
 	</nav>
 </template>
