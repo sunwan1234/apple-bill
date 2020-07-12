@@ -3,37 +3,43 @@
 		<Types :value.sync="record.type">
 		</Types>
 		<div class="labels-wrapper">
-			<ol class="labels" v-if=" isShow === '-'">
-				<li v-for="(item, index) in this.outputTags"
-						:key="index">
-				<span class="iconItem">
-					<Icon :name="item.svg"></Icon>
-					<span>{{ item.name }}</span>
-				</span>
-					<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
-				</li>
-			</ol>
-			<ol class="labels" v-if=" isShow === '+'">
-				<li v-for="(item, index) in this.inputTags"
-						:key="index">
-				<span class="iconItem">
-					<Icon :name="item.svg"></Icon>
-					<span>{{ item.name }}</span>
-				</span>
 
+			<ol class="labels" v-if=" isShow === '-'">
+				<draggable v-model="outputTags" @start="drag=true" @end="drag=false">
+				<li v-for="(item, index) in outputTags"
+						:key="index">
+				<span class="iconItem">
+					<Icon :name="item.svg"></Icon>
+					<span>{{ item.name }}</span>
+				</span>
 					<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
 				</li>
+				</draggable>
 			</ol>
-			<div class="button-wrapper" v-if=" isShow === '-'">
+
+			<ol class="labels" v-if=" isShow === '+'">
+				<draggable v-model="inputTags" @start="drag=true" @end="drag=false">
+				<li v-for="(item, index) in inputTags"
+						:key="index">
+				<span class="iconItem">
+					<Icon :name="item.svg"></Icon>
+					<span>{{ item.name }}</span>
+				</span>
+					<Icon :name="'delete2'" @click="deleteTag(item.id)"
+								></Icon>
+				</li>
+				</draggable>
+			</ol>
+			<span class="button-wrapper" v-if=" isShow === '-'">
 				<router-link to="/labels/edit">
 					<Button>新建标签</Button>
 				</router-link>
-			</div>
-			<div class="button-wrapper" v-if=" isShow === '+'">
+			</span>
+			<span class="button-wrapper" v-if=" isShow === '+'">
 				<router-link to="/labels/edit">
 					<Button>新建标签</Button>
 				</router-link>
-			</div>
+			</span>
 
 		</div>
 
@@ -47,10 +53,10 @@
   import Button from '@/components/Button.vue';
   import initialRecord from '@/constants/initialRecord';
   import clone from '@/lib/clone';
-
+import draggable from 'vuedraggable'
 
   @Component({
-    components: {Button, Types},
+    components: {Button, Types, draggable},
 
   })
   export default class Labels extends Vue {
@@ -97,6 +103,9 @@
 </script>
 
 <style scoped lang="scss">
+	.labels-wrapper::-webkit-scrollbar {
+		display: none;
+	}
 	.labels-wrapper {
 		display: flex;
 		flex-direction: column;
@@ -115,19 +124,23 @@
 			justify-content: space-between;
 			align-items: center;
 			border-bottom: 1px solid #e6e6e6;
-			padding-right: 10px;
+			padding: 6px;
 
 			> .iconItem {
 				display: flex;
 				align-items: center;
 				padding: 5px 2px;
+
+				& > span {
+					font-size: 18px;
+				}
 			}
 
 			> .iconItem svg {
 				border: 1px solid #333;
 				padding: 5px;
-				width: 2em;
-				height: 2em;
+				width: 40px;
+				height: 40px;
 				border-radius: 50%;
 				background: white;
 				margin-right: 5px;
@@ -136,8 +149,8 @@
 	}
 
 	.button-wrapper {
-		text-align: center;
-		margin-top: 10px;
+		display: inline-block;
+		margin: auto;
 	}
 
 </style>

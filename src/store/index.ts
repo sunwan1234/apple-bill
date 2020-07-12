@@ -87,6 +87,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     fetchRecords(state) {
+      window.localStorage.removeItem('recordList')
       const records = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
       if (records.length === 0) {
         store.commit('saveDefaultRecords')
@@ -122,7 +123,6 @@ const store = new Vuex.Store({
         store.commit('saveDefault');
       }
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
-
     },
     createTag(state, newTag: Tag) {
       const names = state.tagList.map(item => item.name);
@@ -144,6 +144,14 @@ const store = new Vuex.Store({
       state.outTags = state.tagList.filter(item => item.type === '-');
     },
     getInTags(state) {
+      state.inTags = state.tagList.filter(item => item.type === '+');
+    },
+    updateOutTags(state){
+      store.commit('fetchTags')
+      state.outTags = state.tagList.filter(item => item.type === '-');
+    },
+    updateInTags(state){
+      store.commit('fetchTags')
       state.inTags = state.tagList.filter(item => item.type === '+');
     },
     removeTag(state, id: string) {

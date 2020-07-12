@@ -32,6 +32,10 @@
 		height: 100vh;
 	}
 
+	.layout-wrapper::-webkit-scrollbar {
+		display: none;
+	}
+
 	.content {
 		flex-grow: 1; // 让内容尽量占满
 		overflow: auto;

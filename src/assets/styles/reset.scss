@@ -2,6 +2,10 @@
   max-width: 450px;
   margin: 0 auto;
 }
+::-webkit-scrollbar {
+ display: none;
+  width: 0;
+}
 * {
   margin: 0; padding: 0;
   box-sizing: border-box;

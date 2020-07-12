@@ -40,7 +40,8 @@
     "svg-sprite-loader": "^5.0.0",
     "svgo-loader": "^2.2.1",
     "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuedraggable": "^2.24.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
