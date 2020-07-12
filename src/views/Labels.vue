@@ -1,33 +1,34 @@
 <template>
 	<Layout>
+
 		<Types :value.sync="record.type">
 		</Types>
 		<div class="labels-wrapper">
 
 			<ol class="labels" v-if=" isShow === '-'">
 				<draggable v-model="outputTags" @start="drag=true" @end="drag=false">
-				<li v-for="(item, index) in outputTags"
-						:key="index">
+					<li v-for="(item, index) in outputTags"
+							:key="index">
 				<span class="iconItem">
 					<Icon :name="item.svg"></Icon>
 					<span>{{ item.name }}</span>
 				</span>
-					<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
-				</li>
+						<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
+					</li>
 				</draggable>
 			</ol>
 
 			<ol class="labels" v-if=" isShow === '+'">
 				<draggable v-model="inputTags" @start="drag=true" @end="drag=false">
-				<li v-for="(item, index) in inputTags"
-						:key="index">
+					<li v-for="(item, index) in inputTags"
+							:key="index">
 				<span class="iconItem">
 					<Icon :name="item.svg"></Icon>
 					<span>{{ item.name }}</span>
 				</span>
-					<Icon :name="'delete2'" @click="deleteTag(item.id)"
-								></Icon>
-				</li>
+						<Icon :name="'delete2'" @click="deleteTag(item.id)"
+						></Icon>
+					</li>
 				</draggable>
 			</ol>
 			<span class="button-wrapper" v-if=" isShow === '-'">
@@ -53,13 +54,15 @@
   import Button from '@/components/Button.vue';
   import initialRecord from '@/constants/initialRecord';
   import clone from '@/lib/clone';
-import draggable from 'vuedraggable'
+  import draggable from 'vuedraggable';
+
 
   @Component({
     components: {Button, Types, draggable},
 
   })
   export default class Labels extends Vue {
+
 
     beforeCreate() {
       this.$store.commit('fetchTags');
@@ -95,7 +98,6 @@ import draggable from 'vuedraggable'
     deleteTag(id: string) {
       console.log(id);
       this.$store.commit('removeTag', id);
-
     }
 
 
@@ -106,6 +108,7 @@ import draggable from 'vuedraggable'
 	.labels-wrapper::-webkit-scrollbar {
 		display: none;
 	}
+
 	.labels-wrapper {
 		display: flex;
 		flex-direction: column;
@@ -124,7 +127,7 @@ import draggable from 'vuedraggable'
 			justify-content: space-between;
 			align-items: center;
 			border-bottom: 1px solid #e6e6e6;
-			padding: 6px;
+			padding: 4px 15px;
 
 			> .iconItem {
 				display: flex;

@@ -87,7 +87,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     fetchRecords(state) {
-      window.localStorage.removeItem('recordList')
+      // window.localStorage.removeItem('recordList')
       const records = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
       if (records.length === 0) {
         store.commit('saveDefaultRecords')
@@ -104,8 +104,9 @@ const store = new Vuex.Store({
       store.commit('saveRecords');
     },
     saveRecords(state) {
-      window.localStorage.setItem('recordList',
-        JSON.stringify(state.recordList));
+      console.log('----------save record')
+      console.log(state.recordList)
+      window.localStorage.setItem('recordList',JSON.stringify(state.recordList));
       window.alert('已记好一笔账~');
     },
     saveDefault() {

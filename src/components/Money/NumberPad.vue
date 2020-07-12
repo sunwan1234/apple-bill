@@ -75,24 +75,27 @@
     }
 
     ok() {
-      const output = this.output;
-      const indexOfPoint = this.output.indexOf('.');
+      console.log('----ok')
+      let output = this.output;
+      console.log(output)
+      const indexOfPoint = output.indexOf('.');
+
       if (indexOfPoint >= 0) {
-        const numberAfterPoint = this.output.slice(indexOfPoint).length;
-        while (numberAfterPoint < 3) {
-          this.output += '0';
+
+        while (output.slice(indexOfPoint).length < 3) {
+          output += '0';
         }
         const arr = output.split('.');
         arr.splice(output.indexOf('.'), 1);
-        this.output = arr.join('');
+        output = arr.join('');
 
       } else {
-        this.output += '00'
+        output += '00'
 			}
 			console.log('final====')
-      console.log(this.output)
-      this.$emit('update:value', this.output);
-      this.$emit('submit', this.output);
+      console.log(output)
+      this.$emit('update:value', output.toString());
+      this.$emit('submit', output.toString());
       this.output = '0';
     }
 
