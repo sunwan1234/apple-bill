@@ -303,6 +303,7 @@
 		border: 1px solid #333;
 		border-radius: 18px;
 		padding: 20px 30px;
+		min-height: 100px;
 
 		& > .out {
 			display: flex;

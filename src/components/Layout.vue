@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-wrapper" :style="{height: scrollerHeight}">
-		<div class="content">
+		<div class="content" :style="{'max-height': contentHeight}">
 			<slot></slot>
 		</div>
 		<Nav></Nav>
@@ -15,6 +15,10 @@
     get scrollerHeight(){
       return document.documentElement.clientHeight + 'px'
     }
+    get contentHeight (){
+      const contentHeight = document.documentElement.clientHeight - 54
+      return contentHeight + 'px'
+		}
 
   }
 </script>

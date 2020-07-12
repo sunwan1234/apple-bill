@@ -6,7 +6,7 @@ import store from './store';
 import Nav from '@/views/Nav.vue';
 import Layout from '@/components/Layout.vue';
 import Icon from '@/components/Icon.vue';
-import Vuex from 'vuex'
+import Vuex from 'vuex';
 
 
 Vue.config.productionTip = false;
@@ -22,3 +22,9 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
+
+window.onload = function () {
+  setTimeout(function () {
+    window.scrollTo(0, 200);
+  }, 0);
+};

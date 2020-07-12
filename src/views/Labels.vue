@@ -6,30 +6,28 @@
 		<div class="labels-wrapper">
 
 			<ol class="labels" v-if=" isShow === '-'">
-				<draggable v-model="outputTags" @start="drag=true" @end="drag=false">
-					<li v-for="(item, index) in outputTags"
-							:key="index">
+
+				<li v-for="(item, index) in outputTags"
+						:key="index">
 				<span class="iconItem">
 					<Icon :name="item.svg"></Icon>
 					<span>{{ item.name }}</span>
 				</span>
-						<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
-					</li>
-				</draggable>
+
+					<Icon :name="'delete2'" @click="deleteTag(item.id)"></Icon>
+				</li>
 			</ol>
 
 			<ol class="labels" v-if=" isShow === '+'">
-				<draggable v-model="inputTags" @start="drag=true" @end="drag=false">
-					<li v-for="(item, index) in inputTags"
-							:key="index">
+				<li v-for="(item, index) in inputTags"
+						:key="index">
 				<span class="iconItem">
 					<Icon :name="item.svg"></Icon>
 					<span>{{ item.name }}</span>
 				</span>
-						<Icon :name="'delete2'" @click="deleteTag(item.id)"
-						></Icon>
-					</li>
-				</draggable>
+					<Icon :name="'delete2'" @click="deleteTag(item.id)"
+					></Icon>
+				</li>
 			</ol>
 			<span class="button-wrapper" v-if=" isShow === '-'">
 				<router-link to="/labels/edit">
