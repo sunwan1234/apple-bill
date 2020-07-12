@@ -1,6 +1,5 @@
 <template>
 	<layout>
-		{{this.tag}}
 		<div class="edit-label-wrapper">
 			<header>
 				<span>设定自定义标签</span>

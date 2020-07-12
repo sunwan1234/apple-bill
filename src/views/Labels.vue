@@ -96,7 +96,6 @@
 
 
     deleteTag(id: string) {
-      console.log(id);
       this.$store.commit('removeTag', id);
     }
 

@@ -56,7 +56,7 @@
     }
 
     saveRecord() {
-      console.log(this.recordItem);
+
       if (!this.recordItem.tag) {
         this.clearData();
         return window.alert('请选择一个标签');

@@ -51,7 +51,7 @@
       if (indexOfPoint >= 0 && input === '.') {
         return;
       }
-      console.log(indexOfPoint);
+
       if (indexOfPoint >= 0) {
         if (this.output.slice(indexOfPoint).length >= 3) {
           return;
@@ -75,9 +75,9 @@
     }
 
     ok() {
-      console.log('----ok')
+
       let output = this.output;
-      console.log(output)
+
       const indexOfPoint = output.indexOf('.');
 
       if (indexOfPoint >= 0) {
@@ -92,8 +92,7 @@
       } else {
         output += '00'
 			}
-			console.log('final====')
-      console.log(output)
+
       this.$emit('update:value', output.toString());
       this.$emit('submit', output.toString());
       this.output = '0';

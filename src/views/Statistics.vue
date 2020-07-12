@@ -78,7 +78,7 @@
       if (day.isSame(now, 'day')) {
         return '今天';
       } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
-        console.log('hi');
+
         return '昨天';
       } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
         return '前天';

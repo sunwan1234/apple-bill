@@ -16,12 +16,6 @@
       return document.documentElement.clientHeight + 'px'
     }
 
-    mounted() {
-      // window.onresize监听页面高度的变化
-      window.onresize = function()  {
-        console.log(document.querySelector('#app')?.clientHeight)
-      }
-    }
   }
 </script>
 

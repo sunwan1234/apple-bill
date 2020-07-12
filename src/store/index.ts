@@ -104,8 +104,8 @@ const store = new Vuex.Store({
       store.commit('saveRecords');
     },
     saveRecords(state) {
-      console.log('----------save record')
-      console.log(state.recordList)
+
+
       window.localStorage.setItem('recordList',JSON.stringify(state.recordList));
       window.alert('已记好一笔账~');
     },
@@ -136,7 +136,7 @@ const store = new Vuex.Store({
         'svg': newTag.svg, 'name': newTag.name, 'type': newTag.type
       });
       newDataId += 1;
-      console.log(state.tagList[state.tagList.length - 1]);
+
       store.commit('saveTags');
       state.createTagResult = 'success';
       window.alert('创建标签成功');
