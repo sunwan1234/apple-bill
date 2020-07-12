@@ -57,9 +57,15 @@
 
     saveRecord() {
 
-      if (!this.recordItem.tag) {
+      if (this.recordItem.tag.name==='') {
         this.clearData();
-        return window.alert('请选择一个标签');
+        window.alert('请选择一个标签');
+        return
+      }
+			console.log(this.recordItem)
+      if(this.recordItem.amount==='000') {
+       window.alert('请填写金额');
+        return
       }
       this.$store.commit('createRecord', this.recordItem);
       this.clearData();

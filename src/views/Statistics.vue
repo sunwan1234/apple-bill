@@ -10,10 +10,10 @@
 
 			</div>
 			<div class="out" v-for="(item, index) in totalData" :key="item.name">
-				<span>共{{item.name}}</span>
+				<span class="total">共{{item.name}}</span>
 				<Progress :class="'progress-' + index"
 									:bar-width="Math.round(item.value / totalDataSum *100).toString()"></Progress>
-				<span>￥{{item.origin}}</span>
+				<span class="type">{{item.type}}￥{{item.origin}}</span>
 			</div>
 		</div>
 
@@ -163,8 +163,8 @@
 
     get totalData() {
       return [
-        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0]},
-        {value: parseFloat(this.totalAmount[1]!), name: '收入', origin: this.totalAmount[1]},
+        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0], type:'-'},
+        {value: parseFloat(this.totalAmount[1]!), name: '收入', origin: this.totalAmount[1], type: '+'},
       ];
     }
 
@@ -310,11 +310,16 @@
 			align-items: center;
 			justify-content: space-between;
 
-			& > span {
+			& > span.total {
 				margin-right: 10px;
 				font-size: 12px;
 				color: gray;
 				width: 40px;
+			}
+
+			& > span.type {
+				font-size: 12px;
+        min-width:65px;
 			}
 		}
 	}

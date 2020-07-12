@@ -90,11 +90,11 @@ const store = new Vuex.Store({
       // window.localStorage.removeItem('recordList')
       const records = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
       if (records.length === 0) {
-        store.commit('saveDefaultRecords')
+        store.commit('saveDefaultRecords');
       }
-      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[]
-      },
-    saveDefaultRecords(state){
+      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
+    },
+    saveDefaultRecords(state) {
       window.localStorage.setItem('recordList', JSON.stringify(defaultRecords));
     },
     createRecord(state, record: RecordItem) {
@@ -106,7 +106,7 @@ const store = new Vuex.Store({
     saveRecords(state) {
 
 
-      window.localStorage.setItem('recordList',JSON.stringify(state.recordList));
+      window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
       window.alert('已记好一笔账~');
     },
     saveDefault() {
@@ -126,10 +126,20 @@ const store = new Vuex.Store({
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
     },
     createTag(state, newTag: Tag) {
+      if (!newTag.name) {
+        window.alert('请输入标签名');
+        return;
+      }
+      if (!newTag.svg) {
+        window.alert('请选择图标');
+        return;
+      }
       const names = state.tagList.map(item => item.name);
+
       if (names.indexOf(newTag.name) >= 0) {
         state.createTagResult = 'duplicated';
-         window.alert('标签名重复，无法创建');
+        window.alert('标签名重复，无法创建');
+        return;
       }
       state.tagList.push({
         'id': newDataId.toString(),
@@ -147,12 +157,12 @@ const store = new Vuex.Store({
     getInTags(state) {
       state.inTags = state.tagList.filter(item => item.type === '+');
     },
-    updateOutTags(state){
-      store.commit('fetchTags')
+    updateOutTags(state) {
+      store.commit('fetchTags');
       state.outTags = state.tagList.filter(item => item.type === '-');
     },
-    updateInTags(state){
-      store.commit('fetchTags')
+    updateInTags(state) {
+      store.commit('fetchTags');
       state.inTags = state.tagList.filter(item => item.type === '+');
     },
     removeTag(state, id: string) {
