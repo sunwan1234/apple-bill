@@ -81,12 +81,10 @@
       const indexOfPoint = output.indexOf('.');
 
       if (indexOfPoint >= 0) {
-
         while (output.slice(indexOfPoint).length < 3) {
           output += '0';
         }
         const arr = output.split('.');
-        arr.splice(output.indexOf('.'), 1);
         output = arr.join('');
 
       } else {

@@ -34,8 +34,8 @@
     }
   })
   export default class Money extends Vue {
-    fuckTags: Tag[] = [];
-    recordItem: RecordItem = clone(initialRecord)
+    fuckTags: Tag[] = [{id: '1', svg: 'meal', name: '餐饮', type: '-'}];
+    recordItem: RecordItem = clone(initialRecord);
 
     created() {
       this.$store.commit('fetchRecords');
@@ -57,15 +57,11 @@
 
     saveRecord() {
 
-      if (this.recordItem.tag.name==='') {
-        this.clearData();
-        window.alert('请选择一个标签');
-        return
-      }
-			console.log(this.recordItem)
-      if(this.recordItem.amount==='000') {
-       window.alert('请填写金额');
-        return
+
+      console.log(this.recordItem);
+      if (this.recordItem.amount === '000') {
+        window.alert('请填写金额');
+        return;
       }
       this.$store.commit('createRecord', this.recordItem);
       this.clearData();
@@ -73,9 +69,9 @@
 
     clearData() {
       this.recordItem = {
-        type: this.recordItem.type, tag: {'id': '', 'svg': '', 'name': '', 'type': ''}, amount: '0.00', note: '',
+        type: this.recordItem.type, tag: this.recordItem.tag, amount: '0.00', note: '',
       };
-      this.fuckTags = [];
+
     }
 
 
