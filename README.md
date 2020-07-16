@@ -1,4 +1,5 @@
-# morney
+# mango bill 芒果记账
+芒果记账时一款极简的记账应用
 
 ## Project setup
 ```
