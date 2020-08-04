@@ -13,7 +13,7 @@
 			明细
 		</router-link>
 		<router-link to="/figure" class="item" active-class="selected">
-			<Icon name="nav-3"></Icon>
+			<Icon name="pie"></Icon>
 			图表
 		</router-link>
 	</nav>

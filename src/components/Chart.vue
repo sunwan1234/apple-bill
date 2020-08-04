@@ -19,7 +19,7 @@
         return console.error('options不能为空');
       }
 
-      this.chart = eCharts.init(this.$refs.wrapper as HTMLDivElement);
+      this.chart = eCharts.init(this.$refs.wrapper as HTMLDivElement, 'light');
       this.chart.setOption(this.options);
 
     }
@@ -36,7 +36,7 @@
 </script>
 
 <style scoped lang="scss">
-	.wrapper {
-		height: 400px;
-	}
+.wrapper {
+	height: 300px;
+}
 </style>
