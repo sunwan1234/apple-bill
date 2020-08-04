@@ -120,7 +120,7 @@
 
       type Result = { title: string; total?: string; items: RecordItem[] }[]
       const result: Result = [{
-        title: dayjs(copyRecordList[0].createdAt).format(),
+        title: dayjs(copyRecordList[0].createdAt).format('YYYY-MM-DD'),
         items: [copyRecordList[0]]
       }];
 
@@ -138,8 +138,9 @@
         group.total = this.getTotal(group.items);
       });
 
-
+		console.log(result)
       return result;
+
     }
 
     get totalAmount() {

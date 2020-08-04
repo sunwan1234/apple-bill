@@ -97,8 +97,9 @@
 		display: flex;
 		align-items: center;
 		border: 1px solid #333;
-		border-radius: 16px;
-		margin: 8px;
+		border-radius: 10px;
+		margin-left: 4px;
+		margin-right: 4px;
 
 		.name {
 			padding-right: 16px;

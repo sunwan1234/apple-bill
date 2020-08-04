@@ -7,15 +7,17 @@
 		<div class="createdAt">
 			<FormItem field-name="日期" placeholder="在这里输入日期"
 								:value.sync="recordItem.createdAt"
-			          type="date"
+								type="date"
 			></FormItem>
 		</div>
+		<div class="moneyNotes">
+			<FormItem field-name="备注"
+								:value="recordItem.note"
+								@update:value="onUpdateNote"
+								placeholder="写点备注吧..."
+								is-number-pad="+"></FormItem>
+		</div>
 
-		<FormItem field-name="备注"
-							:value="recordItem.note"
-							@update:value="onUpdateNote"
-							placeholder="写点备注吧..."
-							is-number-pad="+"></FormItem>
 		<NumberPad @update:value="onUpdateAmount" @submit="saveRecord"></NumberPad>
 
 	</Layout>
@@ -92,5 +94,45 @@
 </script>
 
 <style scoped lang="scss">
+	.moneyNotes {
+		::v-deep .notes-wrapper {
+			position: relative;
 
+			.notes {
+				position: absolute;
+				margin: 0;
+				background: transparent;
+				border: none;
+				border-radius: 0;
+				top: 6px;
+				left: 4px;
+
+				input[type=text] {
+					width: 150px;
+				}
+			}
+		}
+
+	}
+
+	.createdAt {
+		::v-deep .notes-wrapper {
+			& input[type="date"] {
+				position: relative;
+			}
+
+			& input[type="date"]::-webkit-datetime-edit {
+				position: absolute;
+				left: 30px
+			}
+
+			& input[type="date"]::-webkit-calendar-picker-indicator {
+				position: absolute;
+				width: 100%;
+				left: -24px;
+				top: 6px;
+
+			}
+		}
+	}
 </style>
