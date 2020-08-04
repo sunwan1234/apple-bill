@@ -104,8 +104,6 @@ const store = new Vuex.Store({
       store.commit('saveRecords');
     },
     saveRecords(state) {
-
-
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
       window.alert('已记好一笔账~');
     },

@@ -19,10 +19,10 @@
         return console.error('options不能为空');
       }
 
-      console.log(this.options);
+
       this.chart = eCharts.init(this.$refs.wrapper as HTMLDivElement);
       this.chart.setOption(this.options);
-      console.log(this.chart)
+
 
     }
 

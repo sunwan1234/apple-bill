@@ -64,11 +64,6 @@
   export default class Statistics extends Vue {
     type = '-';
 
-    mounted() {
-      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
-    }
-
-
     get recordList() {
       return this.$store.state.recordList;
     }
