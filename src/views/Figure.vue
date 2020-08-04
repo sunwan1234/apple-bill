@@ -2,10 +2,10 @@
 	<Layout>
 		<Types class-prefix="type-statistics" :value.sync="type"></Types>
 		<div class="chart-wrapper" ref="chartWrapper">
-			<Chart class="chart" :options="x"/>
+			<Chart class="chart" :options="chartOptions"/>
 		</div>
 		<div>
-
+			{{type}}
 		</div>
 
 	</Layout>
@@ -19,7 +19,6 @@
   import dayjs from 'dayjs';
   import Progress from '@/components/Progress.vue';
   import Chart from '@/components/Chart.vue';
-  import _ from 'lodash';
 
   interface FigurePointArray {
     date: string;
@@ -50,7 +49,7 @@
       }
     }
 
-    get y(){
+    get keyValueList() {
       const copyRecordList = clone(this.recordList)
         .filter(record => record.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
@@ -80,12 +79,12 @@
           array.push({'date': dateString, 'value': this.convertToLikelyFloat(totalAmount.toString()) as string});
         }
       }
-      return  array.reverse()
-		}
+      return array.reverse();
+    }
 
-    get x() {
-      const keys = this.y.map((item) => item.date);
-      const values = this.y.map((item) => item.value);
+    get chartOptions() {
+      const keys = this.keyValueList.map((item) => item.date);
+      const values = this.keyValueList.map((item) => item.value);
 
       return {
         grid: {
@@ -97,7 +96,12 @@
           type: 'category',
           data: keys,
           axisTick: {alignWithLabel: true},
-          axisLine: {lineStyle: {color: '#666'}}
+          axisLine: {lineStyle: {color: '#666'}},
+          axisLabel: {
+            formatter: function (value: string) {
+              return value.substr(5);
+            }
+          },
         },
         yAxis: {
           type: 'value',
