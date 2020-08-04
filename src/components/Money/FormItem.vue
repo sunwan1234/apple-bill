@@ -1,7 +1,24 @@
 <template>
+
 	<div :class="isNewTag === '+'? 'notes-wrapper notes-wrapper-no-bg' : 'notes-wrapper '">
 		<label class="notes">
-			<span class="name">备注</span>
+
+
+			<span class="name">{{fieldName}}</span>
+			<template v-if="type === 'date'">
+				<input :value="x(value)"
+							 @input="onValueChange2($event.target.value)"
+							 :type="type || 'text'"
+							 :placeholder="placeholder"
+							 v-if="isNewTag !== '+'"/>
+			</template>
+			<template v-else>
+				<input :value="value"
+							 @input="onValueChange2($event.target.value)"
+							 type="text"
+							 :placeholder="placeholder"
+							 v-if="isNewTag !== '+'"/>
+			</template>
 			<input :value="value"
 						 @input="onValueChange($event.target.value)"
 						 @compositionstart="onCompositionStart"
@@ -10,11 +27,7 @@
 						 type="text"
 						 :placeholder="placeholder"
 						 maxlength="3" v-if="isNewTag === '+'"/>
-			<input :value="value"
-						 @input="onValueChange2($event.target.value)"
-						 type="text"
-						 :placeholder="placeholder"
-						 v-if="isNewTag !== '+'"/>
+
 
 			<span class="output">{{output}}</span>
 			<Icon name="pencil" v-if="isNewTag === '+'"></Icon>
@@ -26,9 +39,13 @@
   import Vue from 'vue';
   import {Component, Prop, Watch} from 'vue-property-decorator';
   import eventBus from '@/bus.ts';
+  import dayjs from 'dayjs';
 
   @Component
   export default class FormItem extends Vue {
+    @Prop(String) fieldName: string | undefined;
+    @Prop(String) type?: string;
+
 
     @Prop(String) output: string | undefined;
     @Prop(String) placeholder?: string;
@@ -48,6 +65,10 @@
 
     onkeydown() {
       this.lock = false;
+    }
+
+    x(isoString: string) {
+      return dayjs(isoString).format('YYYY-MM-DD');
     }
 
 

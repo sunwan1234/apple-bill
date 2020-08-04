@@ -4,7 +4,18 @@
 		</Types>
 		<Tags :fuckTags="fuckTags" @update:fucktags="onFuckChange"
 					:is-show="recordItem.type"></Tags>
-		<FormItem :value="recordItem.note" @update:value="onUpdateNote" placeholder="写点备注吧..." is-number-pad="+"></FormItem>
+		<div class="createdAt">
+			<FormItem field-name="日期" placeholder="在这里输入日期"
+								:value.sync="recordItem.createdAt"
+			          type="date"
+			></FormItem>
+		</div>
+
+		<FormItem field-name="备注"
+							:value="recordItem.note"
+							@update:value="onUpdateNote"
+							placeholder="写点备注吧..."
+							is-number-pad="+"></FormItem>
 		<NumberPad @update:value="onUpdateAmount" @submit="saveRecord"></NumberPad>
 
 	</Layout>
