@@ -3,7 +3,7 @@
 		<div class="current out" v-if="!isNewTag && isShow === '-'">
 			<div class="div-wrapper">
 				<div v-for="(item, index) in this.outDataSource"
-						 :class="{selected: fuckTags.indexOf(item) >= 0}"
+						 :class="{selected: IsSeletedTag(item) >= 0}"
 						 :key="index" @click="toggle(item)">
 					<Icon :name="item.svg"></Icon>
 					{{ item.name }}
@@ -24,7 +24,7 @@
 		<div class="current in" v-if="!isNewTag && isShow === '+'">
 			<div class="div-wrapper">
 				<div v-for="(item, index) in this.inDataSource"
-						 :class="{selected: fuckTags.indexOf(item) >= 0}"
+						 :class="{selected: IsSeletedTag(item) >= 0}"
 						 :key="index" @click="toggle(item)">
 					<Icon :name="item.svg"></Icon>
 					{{ item.name }}
@@ -61,7 +61,12 @@
   export default class Tags extends Vue {
     @Prop(String) isShow: string | undefined;
     @Prop(String) isNewTag: string | undefined;
-    @Prop(Array) fuckTags: Tag[] | undefined;
+    @Prop(Array) fuckTags!: Tag[];
+
+    IsSeletedTag(tag: Tag) {
+     const tagNames = this.fuckTags.map(item=>item.name)
+			return tagNames.indexOf(tag.name)
+		}
 
     get tags() {
       return this.$store.state.tagList;
@@ -90,21 +95,23 @@
 
 
     toggle(tag: Tag) {
+      console.log(this.fuckTags)
+      this.fuckTags.pop();
       // 每次只能选中一个
-      if (this.fuckTags) {
-        if (this.fuckTags.length === 0) {
-          this.fuckTags.push(tag);
-        } else {
-          this.fuckTags.pop();
-          this.fuckTags.push(tag);
-        }
 
-        if (this.isNewTag === '+') {
-          this.$emit('update:new:tag', this.fuckTags);
-        } else {
-          this.$emit('update:fucktags', this.fuckTags);
-        }
+      if (this.fuckTags.length === 0) {
+        this.fuckTags.push(tag);
+      } else {
+        this.fuckTags.pop();
+        this.fuckTags.push(tag);
       }
+
+      if (this.isNewTag === '+') {
+        this.$emit('update:new:tag', this.fuckTags);
+      } else {
+        this.$emit('update:fucktags', this.fuckTags);
+      }
+
     }
 
   }

@@ -64,6 +64,14 @@
     }
 
     saveTag() {
+      if(!this.tag.name) {
+        window.alert('请填写标签名')
+				return
+			}
+      if(!this.tag.svg) {
+        window.alert('请选择一个图标')
+				return
+			}
       this.$store.commit('createTag', this.tag);
       if (this.$store.state.createTagResult === 'success') {
         this.$router.replace('/labels');

@@ -1,7 +1,7 @@
 <template>
 	<Layout>
 		<div class="title">
-			<span>消费明细</span>
+			<span>收支明细</span>
 		</div>
 		<div class="progress-lists">
 			<div class="final-title-number">
@@ -10,10 +10,10 @@
 
 			</div>
 			<div class="out" v-for="(item, index) in totalData" :key="item.name">
-				<span>共{{item.name}}</span>
+				<span class="total">共{{item.name}}</span>
 				<Progress :class="'progress-' + index"
 									:bar-width="Math.round(item.value / totalDataSum *100).toString()"></Progress>
-				<span>￥{{item.origin}}</span>
+				<span class="type">{{item.type}}￥{{item.origin}}</span>
 			</div>
 		</div>
 
@@ -55,14 +55,14 @@
   import clone from '@/lib/clone';
   import dayjs from 'dayjs';
   import Progress from '@/components/Progress.vue';
+  import Chart from '@/components/Chart.vue';
 
 
   @Component({
-    components: {Progress, Types}
+    components: {Chart, Progress, Types}
   })
   export default class Statistics extends Vue {
     type = '-';
-
 
     get recordList() {
       return this.$store.state.recordList;
@@ -120,7 +120,7 @@
 
       type Result = { title: string; total?: string; items: RecordItem[] }[]
       const result: Result = [{
-        title: dayjs(copyRecordList[0].createdAt).format(),
+        title: dayjs(copyRecordList[0].createdAt).format('YYYY-MM-DD'),
         items: [copyRecordList[0]]
       }];
 
@@ -138,8 +138,9 @@
         group.total = this.getTotal(group.items);
       });
 
-
+		console.log(result)
       return result;
+
     }
 
     get totalAmount() {
@@ -163,8 +164,8 @@
 
     get totalData() {
       return [
-        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0]},
-        {value: parseFloat(this.totalAmount[1]!), name: '收入', origin: this.totalAmount[1]},
+        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0], type: '-'},
+        {value: parseFloat(this.totalAmount[1]!), name: '收入', origin: this.totalAmount[1], type: '+'},
       ];
     }
 
@@ -175,7 +176,7 @@
     get minusTotalData() {
       const inNumber = this.totalData[1].origin;
       const outNumber = this.totalData[0].origin;
-      let finalResult = '' ;
+      let finalResult = '';
       if (inNumber && outNumber) {
         const inNumberString = inNumber.toString();
         const outNumberString = outNumber.toString();
@@ -303,17 +304,23 @@
 		border: 1px solid #333;
 		border-radius: 18px;
 		padding: 20px 30px;
+		min-height: 100px;
 
 		& > .out {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 
-			& > span {
+			& > span.total {
 				margin-right: 10px;
 				font-size: 12px;
 				color: gray;
 				width: 40px;
+			}
+
+			& > span.type {
+				font-size: 12px;
+				min-width: 65px;
 			}
 		}
 	}
@@ -332,4 +339,8 @@
 			color: rgb(244, 100, 123);;
 		}
 	}
+
+
+
+
 </style>
