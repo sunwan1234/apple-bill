@@ -6,7 +6,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Prop, Component} from 'vue-property-decorator';
+  import {Prop, Component, Watch} from 'vue-property-decorator';
   import eCharts, {EChartOption, ECharts} from 'echarts';
 
   @Component
@@ -19,12 +19,17 @@
         return console.error('options不能为空');
       }
 
-
       this.chart = eCharts.init(this.$refs.wrapper as HTMLDivElement);
       this.chart.setOption(this.options);
 
-
     }
+
+    @Watch('options', {immediate:true})
+    onChartChange(value: EChartOption) {
+      this.chart?.setOption(value);
+    }
+
+
 
 
   }

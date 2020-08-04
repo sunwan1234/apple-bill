@@ -116,7 +116,7 @@
           type: 'line'
         }],
         tooltip: {
-          show: true, triggerOn: 'click',
+          show: true,
           position: 'top',
           formatter: '{c}'
         }
