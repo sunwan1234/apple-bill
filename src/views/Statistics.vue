@@ -55,13 +55,18 @@
   import clone from '@/lib/clone';
   import dayjs from 'dayjs';
   import Progress from '@/components/Progress.vue';
+  import Chart from '@/components/Chart.vue';
 
 
   @Component({
-    components: {Progress, Types}
+    components: {Chart, Progress, Types}
   })
   export default class Statistics extends Vue {
     type = '-';
+
+    mounted() {
+      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+    }
 
 
     get recordList() {
@@ -163,7 +168,7 @@
 
     get totalData() {
       return [
-        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0], type:'-'},
+        {value: parseFloat(this.totalAmount[0]!), name: '支出', origin: this.totalAmount[0], type: '-'},
         {value: parseFloat(this.totalAmount[1]!), name: '收入', origin: this.totalAmount[1], type: '+'},
       ];
     }
@@ -175,7 +180,7 @@
     get minusTotalData() {
       const inNumber = this.totalData[1].origin;
       const outNumber = this.totalData[0].origin;
-      let finalResult = '' ;
+      let finalResult = '';
       if (inNumber && outNumber) {
         const inNumberString = inNumber.toString();
         const outNumberString = outNumber.toString();
@@ -319,7 +324,7 @@
 
 			& > span.type {
 				font-size: 12px;
-        min-width:65px;
+				min-width: 65px;
 			}
 		}
 	}
@@ -338,4 +343,8 @@
 			color: rgb(244, 100, 123);;
 		}
 	}
+
+
+
+
 </style>

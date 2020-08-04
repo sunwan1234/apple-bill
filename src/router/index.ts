@@ -5,6 +5,7 @@ import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
 import NotFound from '@/views/NotFound.vue';
 import EditLabel from '@/components/EditLabel.vue';
+import Figure from '@/views/Figure.vue';
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ Vue.use(VueRouter)
     {
       path: '/statistics',
       component: Statistics
+    },
+    {
+      path: '/figure',
+      component: Figure
     },
     {
       path: '*', //不是以上几种情况

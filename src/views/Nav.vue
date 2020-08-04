@@ -12,6 +12,10 @@
 			<Icon name="nav-3"></Icon>
 			明细
 		</router-link>
+		<router-link to="/figure" class="item" active-class="selected">
+			<Icon name="nav-3"></Icon>
+			图表
+		</router-link>
 	</nav>
 </template>
 
