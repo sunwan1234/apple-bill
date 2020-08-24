@@ -1,5 +1,5 @@
-# mango bill 芒果记账
-芒果记账是一款极简的记账应用
+# apple bill 苹果记账
+苹果记账是一款极简的记账应用
 
 ## Project setup
 ```
