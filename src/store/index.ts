@@ -31,7 +31,7 @@ const defaultRecords = [
   {
     amount: '32800',
     createdAt: '2020-07-08T09:34:10.201Z',
-    note: '买口红',
+    note: '买球鞋',
     tag: {id: '2', svg: 'shop', name: '购物', type: '-'},
     type: '-'
   },
